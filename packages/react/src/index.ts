@@ -117,3 +117,72 @@ export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbItem } from './compo
 
 // Pagination
 export { Pagination, type PaginationProps } from './components/Pagination';
+
+// Popover
+export { Popover, PopoverTrigger, PopoverContent } from './components/Popover';
+
+// ContextMenu
+export {
+  ContextMenu,
+  ContextMenuTrigger,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuLabel,
+  ContextMenuGroup,
+  ContextMenuSub,
+} from './components/ContextMenu';
+
+// Accordion
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/Accordion';
+
+// ScrollArea
+export { ScrollArea, ScrollBar } from './components/ScrollArea';
+
+// RadioGroup
+export { RadioGroup, RadioGroupItem } from './components/RadioGroup';
+
+// Select
+export {
+  Select,
+  SelectGroup,
+  SelectValue,
+  SelectTrigger,
+  SelectContent,
+  SelectItem,
+  SelectLabel,
+  SelectSeparator,
+} from './components/Select';
+
+// Combobox
+export { Combobox, type ComboboxProps, type ComboboxOption } from './components/Combobox';
+
+// Slider
+export { Slider, type SliderProps } from './components/Slider';
+
+// Stepper
+export { Stepper, type StepperProps, type StepperStep } from './components/Stepper';
+
+// InputOTP
+export { InputOTP, type InputOTPProps } from './components/InputOTP';
+
+// Dropzone
+export { Dropzone, type DropzoneProps } from './components/Dropzone';
+
+// AvatarGroup
+export { AvatarGroup, type AvatarGroupProps } from './components/AvatarGroup';
+
+// Tree
+export { Tree, type TreeProps, type TreeNode } from './components/Tree';
+
+// Calendar
+export { Calendar, type CalendarProps } from './components/Calendar';
+
+// DatePicker
+export { DatePicker, type DatePickerProps } from './components/DatePicker';
+
+// ChatBubble
+export { ChatBubble, ChatTyping, chatBubbleVariants, type ChatBubbleProps } from './components/ChatBubble';
+
+// CodeBlock
+export { CodeBlock, type CodeBlockProps } from './components/CodeBlock';
