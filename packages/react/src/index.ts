@@ -20,3 +20,18 @@ export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter }
 // Feedback
 export { Spinner, spinnerVariants, type SpinnerProps } from './components/Spinner';
 export { Skeleton, type SkeletonProps } from './components/Skeleton';
+
+// Overlays
+export {
+  Dialog,
+  DialogTrigger,
+  DialogPortal,
+  DialogOverlay,
+  DialogContent,
+  DialogHeader,
+  DialogFooter,
+  DialogTitle,
+  DialogDescription,
+  DialogClose,
+} from './components/Dialog';
+export { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from './components/Tooltip';
