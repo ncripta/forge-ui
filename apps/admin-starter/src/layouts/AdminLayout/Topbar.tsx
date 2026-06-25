@@ -34,7 +34,7 @@ export function Topbar() {
   };
 
   return (
-    <header className="h-16 bg-white border-b border-surface-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
+    <header className="h-16 bg-surface-50 border-b border-surface-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
       {/* Left */}
       <div className="flex items-center gap-4 flex-1">
         <button className="lg:hidden text-surface-500 hover:text-surface-900" onClick={() => setSidebarOpen(true)}>
@@ -81,7 +81,7 @@ export function Topbar() {
         {/* Notifications */}
         <button className="relative p-2 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-full">
           <Icon name="Bell" size={20} />
-          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-surface-50" />
         </button>
 
         {/* User menu */}

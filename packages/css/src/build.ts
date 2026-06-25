@@ -149,23 +149,88 @@ const themeDarkCSS = `/**
  * Forge UI - Theme Dark
  * Auto-generated from @forge-ui/tokens. DO NOT EDIT MANUALLY.
  */
-[data-theme="dark"] {
+[data-mode="dark"] {
 ${darkVars}
+
+  /* Surface scale overrides for dark mode */
+  --forge-surface-50: #0f172a;
+  --forge-surface-100: #1e293b;
+  --forge-surface-200: #334155;
+  --forge-surface-300: #475569;
+  --forge-surface-400: #64748b;
+  --forge-surface-500: #94a3b8;
+  --forge-surface-600: #cbd5e1;
+  --forge-surface-800: #f1f5f9;
+  --forge-surface-900: #f8fafc;
+
+  /* Primary scale adjustments for dark mode */
+  --forge-primary-50: #1e1b4b;
+  --forge-primary-100: #312e81;
+  --forge-primary-400: #a5b4fc;
+  --forge-primary-500: #818cf8;
+  --forge-primary-600: #a5b4fc;
+  --forge-primary-700: #c7d2fe;
 }
 `;
 
 
 const colorThemesCSS = Object.entries(colorThemes.themes)
   .map(([themeName, tokens]) => {
-    const vars = Object.entries(tokens)
-      .map(([key, token]) => `  --forge-${key}: ${token.value};`)
-      .join('\n');
-    // First theme (indigo) goes into :root, others use data-theme selector
     if (themeName === 'indigo') {
       return `/* Theme: ${themeName} (default - applied via :root in theme-base.css) */`;
     }
+
+    // Light mode vars
+    const lightVarsTheme = Object.entries(tokens)
+      .map(([key, token]) => `  --forge-${key}: ${token.value};`)
+      .join('\n');
+
+    // Dark mode vars: invert surface scale, adjust primary
+    const darkEntries: Record<string, string> = {};
+    for (const [key, token] of Object.entries(tokens)) {
+      if (key.startsWith('surface-')) {
+        // Invert: 50↔900, 100↔800, 200↔600, 300↔500, 400 stays
+        const invertMap: Record<string, string> = {
+          'surface-50': 'surface-900',
+          'surface-100': 'surface-800',
+          'surface-200': 'surface-600',
+          'surface-300': 'surface-500',
+          'surface-400': 'surface-400',
+          'surface-500': 'surface-300',
+          'surface-600': 'surface-200',
+          'surface-800': 'surface-100',
+          'surface-900': 'surface-50',
+        };
+        const targetKey = invertMap[key];
+        if (targetKey) {
+          darkEntries[targetKey] = token.value;
+        }
+      } else if (key.startsWith('primary-')) {
+        // For dark: swap low/high (50↔700, 100↔600, keep 400/500 with lighter tones)
+        const primaryDarkMap: Record<string, string> = {
+          'primary-50': 'primary-700',
+          'primary-100': 'primary-600',
+          'primary-400': 'primary-400',
+          'primary-500': 'primary-400',
+          'primary-600': 'primary-100',
+          'primary-700': 'primary-50',
+        };
+        const targetKey = primaryDarkMap[key];
+        if (targetKey) {
+          darkEntries[targetKey] = token.value;
+        }
+      }
+    }
+    const darkVarsTheme = Object.entries(darkEntries)
+      .map(([key, value]) => `  --forge-${key}: ${value};`)
+      .join('\n');
+
     return `[data-theme="${themeName}"] {
-${vars}
+${lightVarsTheme}
+}
+
+[data-mode="dark"][data-theme="${themeName}"] {
+${darkVarsTheme}
 }`;
   })
   .filter(Boolean)

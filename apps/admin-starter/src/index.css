@@ -8,6 +8,6 @@
 
 body {
   font-family: var(--forge-font-family-sans);
-  background-color: var(--forge-surface-background);
-  color: var(--forge-text-main);
+  background-color: var(--forge-surface-50);
+  color: var(--forge-surface-900);
 }

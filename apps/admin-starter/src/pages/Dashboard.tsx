@@ -56,7 +56,7 @@ export function DashboardPage() {
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="bg-white p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
+          <div key={kpi.label} className="bg-surface-50 p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
             <div className="flex justify-between items-start">
               <p className="text-sm font-medium text-surface-500">{kpi.label}</p>
               <div className={`p-2 rounded-lg ${kpi.iconBg}`}>
@@ -77,7 +77,7 @@ export function DashboardPage() {
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Chart Area */}
-        <div className="xl:col-span-2 bg-white p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
+        <div className="xl:col-span-2 bg-surface-50 p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
           <div className="flex justify-between items-center mb-6">
             <div>
               <h3 className="text-lg font-bold text-surface-900">Actividad del Sistema</h3>
@@ -99,7 +99,7 @@ export function DashboardPage() {
         </div>
 
         {/* Recent Users */}
-        <div className="bg-white rounded-xl border border-surface-100 shadow-sm flex flex-col overflow-hidden">
+        <div className="bg-surface-50 rounded-xl border border-surface-100 shadow-sm flex flex-col overflow-hidden">
           <div className="p-6 border-b border-surface-100 flex justify-between items-center">
             <h3 className="text-lg font-bold text-surface-900">Usuarios Recientes</h3>
             <button className="text-sm font-medium text-primary-600 hover:text-primary-700">Ver todos</button>
