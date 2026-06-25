@@ -1,0 +1,17 @@
+{
+  "name": "@forge-ui/react",
+  "version": "0.1.0",
+  "description": "React component library for Forge UI",
+  "main": "src/index.ts",
+  "scripts": {
+    "build": "echo \"React build pipeline pending\" && exit 0"
+  },
+  "dependencies": {
+    "@forge-ui/tailwind": "*"
+  },
+  "peerDependencies": {
+    "react": ">=18.0.0",
+    "react-dom": ">=18.0.0"
+  },
+  "license": "UNLICENSED"
+}

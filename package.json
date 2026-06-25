@@ -1,0 +1,29 @@
+{
+  "name": "forge-ui",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Forge UI - Design System & Component Platform",
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
+  "scripts": {
+    "prepare": "husky",
+    "changeset": "changeset",
+    "version-packages": "changeset version",
+    "release": "changeset publish",
+    "build:tokens": "npm run build -w packages/tokens",
+    "build:css": "npm run build -w packages/css",
+    "build:tailwind": "npm run build -w packages/tailwind",
+    "build:core": "npm run build:tokens && npm run build:css && npm run build:tailwind"
+  },
+  "devDependencies": {
+    "@changesets/cli": "^2.27.0",
+    "@commitlint/cli": "^19.0.0",
+    "@commitlint/config-conventional": "^19.0.0",
+    "husky": "^9.0.0"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

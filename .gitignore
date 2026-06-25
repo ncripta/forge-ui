@@ -1,0 +1,36 @@
+boundaries.md
+estructura.md
+fase1.md
+fase2.md
+fase3-components.md
+fase3.md
+fase4.md
+fase5.md
+inicio.md
+plan.md
+versionamiento.md
+
+# Dependencias
+node_modules/
+**/node_modules/
+
+# Entornos y logs
+.env
+.env.local
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# Builds y compilados (Fase 2 y 3)
+dist/
+build/
+**/dist/
+**/build/
+
+# Archivos temporales de Changesets
+.changeset/*.md
+!.changeset/README.md
+
+# Archivos del sistema operativo
+.DS_Store
+Thumbs.db
