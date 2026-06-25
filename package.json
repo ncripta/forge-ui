@@ -15,7 +15,9 @@
     "build:tokens": "tsc -p packages/tokens/tsconfig.json",
     "build:css": "tsx packages/css/src/build.ts",
     "build:tailwind": "tsc -p packages/tailwind/tsconfig.json",
-    "build:core": "npm run build:tokens && npm run build:css && npm run build:tailwind"
+    "build:react": "npm run build -w packages/react",
+    "build:core": "npm run build:tokens && npm run build:css && npm run build:tailwind",
+    "build:all": "npm run build:core && npm run build:react"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",
