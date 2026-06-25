@@ -113,7 +113,7 @@ export function UsersPage() {
           <Input placeholder="Buscar por nombre o email..." value={search} onChange={(e) => setSearch(e.target.value)} onKeyDown={(e) => e.key === 'Enter' && handleSearch()} />
           <Button intent="secondary" onClick={handleSearch}>Buscar</Button>
         </div>
-        <Select onValueChange={(v) => setFilters((f) => ({ ...f, page: 1, role: v || undefined }))}>
+        <Select value={filters.role || ''} onValueChange={(v) => setFilters((f) => ({ ...f, page: 1, role: v || undefined }))}>
           <SelectTrigger className="w-[140px]"><SelectValue placeholder="Rol" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="SUPER_ADMIN">Super Admin</SelectItem>
@@ -121,13 +121,25 @@ export function UsersPage() {
             <SelectItem value="USER">User</SelectItem>
           </SelectContent>
         </Select>
-        <Select onValueChange={(v) => setFilters((f) => ({ ...f, page: 1, status: v || undefined }))}>
+        <Select value={filters.status || ''} onValueChange={(v) => setFilters((f) => ({ ...f, page: 1, status: v || undefined }))}>
           <SelectTrigger className="w-[140px]"><SelectValue placeholder="Estado" /></SelectTrigger>
           <SelectContent>
             <SelectItem value="ACTIVE">Activo</SelectItem>
             <SelectItem value="INACTIVE">Inactivo</SelectItem>
           </SelectContent>
         </Select>
+        {(filters.search || filters.role || filters.status) && (
+          <Button
+            intent="ghost"
+            onClick={() => { setSearch(''); setFilters({ page: 1 }); }}
+            className="text-text-muted"
+          >
+            <svg className="h-4 w-4 mr-1" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
+              <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+            Limpiar filtros
+          </Button>
+        )}
       </div>
 
       {/* Table */}

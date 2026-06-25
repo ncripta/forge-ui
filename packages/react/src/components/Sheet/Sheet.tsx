@@ -37,7 +37,7 @@ const SheetContent = React.forwardRef<
     <SheetOverlay />
     <SheetPrimitive.Content
       ref={ref}
-      className={cn(sheetContentVariants({ side }), 'p-6', className)}
+      className={cn(sheetContentVariants({ side }), 'p-6 overflow-y-auto', className)}
       {...props}
     >
       {children}

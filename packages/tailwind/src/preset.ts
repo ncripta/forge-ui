@@ -49,8 +49,6 @@ const forgePreset: Partial<Config> = {
         },
       },
       spacing: {
-        '0': 'var(--forge-space-0)',
-        'px': 'var(--forge-space-px)',
         '0.5': 'var(--forge-space-0.5)',
         '1': 'var(--forge-space-1)',
         '1.5': 'var(--forge-space-1.5)',
