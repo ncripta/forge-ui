@@ -63,3 +63,29 @@ export {
   type SortingState,
   type RowSelectionState,
 } from './components/DataTable';
+
+// Navigation
+export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/Tabs';
+export {
+  Command,
+  CommandInput,
+  CommandList,
+  CommandEmpty,
+  CommandGroup,
+  CommandSeparator,
+  CommandItem,
+  CommandShortcut,
+} from './components/CommandPalette';
+
+// Charts
+export {
+  BarChart,
+  LineChart,
+  DonutChart,
+  ChartContainer,
+  CHART_COLORS,
+  type BarChartProps,
+  type LineChartProps,
+  type DonutChartProps,
+  type ChartDataPoint,
+} from './components/Chart';
