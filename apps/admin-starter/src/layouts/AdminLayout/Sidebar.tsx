@@ -6,24 +6,24 @@ import { appConfig } from '@/config/app.config';
 import { Badge, ScrollArea, Icon, type IconName } from '@forge-ui/react';
 import { cn } from '@forge-ui/react';
 
-function NavItemLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
+function NavItemLink({ item }: { item: NavItem }) {
   return (
     <NavLink
       to={item.path}
       className={({ isActive }) =>
         cn(
-          'flex items-center gap-3 rounded-md px-3 py-2 text-sm font-medium transition-colors duration-fast',
+          'flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors duration-fast',
           isActive
-            ? 'bg-primary-subtle text-primary-main'
-            : 'text-text-secondary hover:bg-surface-sunken hover:text-text-main'
+            ? 'bg-primary-50 text-primary-700'
+            : 'text-surface-600 hover:bg-surface-100 hover:text-surface-900'
         )
       }
     >
-      <span className="shrink-0 h-5 w-5"><Icon name={item.icon as IconName} size={18} /></span>
-      {!collapsed && (
+      {({ isActive }) => (
         <>
+          <Icon name={item.icon as IconName} size={18} className={isActive ? 'text-primary-600' : 'text-surface-400'} />
           <span className="truncate">{item.title}</span>
-          {item.badge && <Badge intent="primary" className="ml-auto">{item.badge}</Badge>}
+          {item.badge && <Badge intent="primary" className="ml-auto text-[10px]">{item.badge}</Badge>}
         </>
       )}
     </NavLink>
@@ -31,7 +31,7 @@ function NavItemLink({ item, collapsed }: { item: NavItem; collapsed: boolean })
 }
 
 export function Sidebar() {
-  const { sidebarCollapsed } = useUIStore();
+  const { sidebarOpen, setSidebarOpen } = useUIStore();
   const user = useAuthStore((s) => s.user);
 
   const filteredMenu = navigationMenu
@@ -44,39 +44,64 @@ export function Sidebar() {
     .filter((group) => group.items.length > 0);
 
   return (
-    <aside
-      className={cn(
-        'flex h-screen flex-col border-r border-surface-border bg-surface-raised transition-all duration-normal',
-        sidebarCollapsed ? 'w-16' : 'w-64'
+    <>
+      {/* Mobile backdrop */}
+      {sidebarOpen && (
+        <div
+          className="fixed inset-0 bg-black/50 z-40 lg:hidden"
+          onClick={() => setSidebarOpen(false)}
+        />
       )}
-    >
-      {/* Logo */}
-      <div className="flex h-16 items-center gap-2 border-b border-surface-border px-4">
-        <img src={appConfig.logo} alt={appConfig.name} className="h-8 w-8 shrink-0" />
-        {!sidebarCollapsed && (
-          <span className="text-lg font-bold text-text-main truncate">{appConfig.name}</span>
-        )}
-      </div>
 
-      {/* Navigation */}
-      <ScrollArea className="flex-1 px-3 py-4">
-        <nav className="space-y-6">
-          {filteredMenu.map((group) => (
-            <div key={group.group}>
-              {!sidebarCollapsed && (
-                <p className="mb-2 px-3 text-xs font-semibold uppercase tracking-wide text-text-muted">
+      <aside
+        className={cn(
+          'bg-white w-64 border-r border-surface-200 flex flex-col fixed inset-y-0 left-0 z-50 transform transition-transform duration-300 ease-in-out lg:relative lg:translate-x-0',
+          sidebarOpen ? 'translate-x-0' : '-translate-x-full'
+        )}
+      >
+        {/* Logo */}
+        <div className="h-16 flex items-center px-6 border-b border-surface-100">
+          <div className="flex items-center gap-2 text-primary-600 font-bold text-xl tracking-tight">
+            <Icon name="Hexagon" size={24} className="fill-primary-50 text-primary-600" />
+            {appConfig.name}
+          </div>
+          <button className="ml-auto lg:hidden text-surface-400 hover:text-surface-800" onClick={() => setSidebarOpen(false)}>
+            <Icon name="X" size={20} />
+          </button>
+        </div>
+
+        {/* Navigation */}
+        <ScrollArea className="flex-1 py-6 px-4">
+          <nav className="space-y-1">
+            {filteredMenu.map((group) => (
+              <div key={group.group}>
+                <p className="px-3 text-xs font-semibold text-surface-400 uppercase tracking-wider mb-3 mt-6 first:mt-0">
                   {group.group}
                 </p>
-              )}
-              <div className="space-y-1">
-                {group.items.map((item) => (
-                  <NavItemLink key={item.path} item={item} collapsed={sidebarCollapsed} />
-                ))}
+                <div className="space-y-1">
+                  {group.items.map((item) => (
+                    <NavItemLink key={item.path} item={item} />
+                  ))}
+                </div>
               </div>
+            ))}
+          </nav>
+        </ScrollArea>
+
+        {/* User Profile (Bottom) */}
+        <div className="p-4 border-t border-surface-100">
+          <div className="flex items-center gap-3 p-2 rounded-lg hover:bg-surface-100 cursor-pointer">
+            <div className="w-10 h-10 rounded-full bg-primary-100 flex items-center justify-center text-primary-700 font-bold text-sm">
+              {user?.name?.charAt(0) || 'U'}
             </div>
-          ))}
-        </nav>
-      </ScrollArea>
-    </aside>
+            <div className="flex-1 min-w-0">
+              <p className="text-sm font-medium text-surface-900 truncate">{user?.name || 'Usuario'}</p>
+              <p className="text-xs text-surface-500 truncate">{user?.role || 'User'}</p>
+            </div>
+            <Icon name="ChevronsUpDown" size={16} className="text-surface-400" />
+          </div>
+        </div>
+      </aside>
+    </>
   );
 }

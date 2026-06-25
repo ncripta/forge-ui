@@ -66,6 +66,11 @@ const radius = readJSON<{ radius: TokenObject }>(path.join(tokensDir, 'semantic/
 const shadows = readJSON<{ shadow: TokenObject }>(path.join(tokensDir, 'semantic/shadows.json'));
 const motion = readJSON<{ motion: TokenObject }>(path.join(tokensDir, 'semantic/motion.json'));
 
+interface ColorThemes {
+  themes: Record<string, Record<string, TokenValue>>;
+}
+const colorThemes = readJSON<ColorThemes>(path.join(tokensDir, 'semantic/color-themes.json'));
+
 // Objeto raíz para resolver referencias
 const rootData = { color: colors.color };
 
@@ -104,6 +109,12 @@ const radiusVars = generateVars(radiusFlat, 'radius-');
 const shadowsVars = generateVars(shadowsFlat, 'shadow-');
 const motionVars = generateVars(motionFlat, 'motion-');
 
+// --- Color theme default (indigo) vars para inyectar en :root ---
+
+const defaultThemeVars = Object.entries(colorThemes.themes['indigo']!)
+  .map(([key, token]) => `  --forge-${key}: ${token.value};`)
+  .join('\n');
+
 // --- Ensamblaje ---
 
 const themeBaseCSS = `/**
@@ -111,6 +122,9 @@ const themeBaseCSS = `/**
  * Auto-generated from @forge-ui/tokens. DO NOT EDIT MANUALLY.
  */
 :root {
+  /* Color Theme (default: indigo) */
+${defaultThemeVars}
+
   /* Semantic Colors */
 ${lightVars}
 
@@ -140,6 +154,34 @@ ${darkVars}
 }
 `;
 
+
+const colorThemesCSS = Object.entries(colorThemes.themes)
+  .map(([themeName, tokens]) => {
+    const vars = Object.entries(tokens)
+      .map(([key, token]) => `  --forge-${key}: ${token.value};`)
+      .join('\n');
+    // First theme (indigo) goes into :root, others use data-theme selector
+    if (themeName === 'indigo') {
+      return `/* Theme: ${themeName} (default - applied via :root in theme-base.css) */`;
+    }
+    return `[data-theme="${themeName}"] {
+${vars}
+}`;
+  })
+  .filter(Boolean)
+  .join('\n\n');
+
+const colorThemesFile = `/**
+ * Forge UI - Color Themes
+ * Auto-generated from @forge-ui/tokens. DO NOT EDIT MANUALLY.
+ * Apply themes via: document.documentElement.setAttribute('data-theme', 'emerald')
+ */
+
+/* Default theme (indigo) variables are in theme-base.css :root */
+
+${colorThemesCSS}
+`;
+
 // --- Escritura ---
 
 if (!fs.existsSync(outDir)) {
@@ -148,7 +190,9 @@ if (!fs.existsSync(outDir)) {
 
 fs.writeFileSync(path.join(outDir, 'theme-base.css'), themeBaseCSS);
 fs.writeFileSync(path.join(outDir, 'theme-dark.css'), themeDarkCSS);
+fs.writeFileSync(path.join(outDir, 'color-themes.css'), colorThemesFile);
 
 console.log('✓ @forge-ui/css compiled successfully');
 console.log('  → dist/theme-base.css');
 console.log('  → dist/theme-dark.css');
+console.log('  → dist/color-themes.css');

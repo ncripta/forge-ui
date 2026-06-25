@@ -10,6 +10,12 @@ const forgePreset: Partial<Config> = {
     extend: {
       colors: {
         primary: {
+          50: 'var(--forge-primary-50)',
+          100: 'var(--forge-primary-100)',
+          400: 'var(--forge-primary-400)',
+          500: 'var(--forge-primary-500)',
+          600: 'var(--forge-primary-600)',
+          700: 'var(--forge-primary-700)',
           main: 'var(--forge-primary-main)',
           hover: 'var(--forge-primary-hover)',
           active: 'var(--forge-primary-active)',
@@ -32,6 +38,15 @@ const forgePreset: Partial<Config> = {
           subtle: 'var(--forge-warning-subtle)',
         },
         surface: {
+          50: 'var(--forge-surface-50)',
+          100: 'var(--forge-surface-100)',
+          200: 'var(--forge-surface-200)',
+          300: 'var(--forge-surface-300)',
+          400: 'var(--forge-surface-400)',
+          500: 'var(--forge-surface-500)',
+          600: 'var(--forge-surface-600)',
+          800: 'var(--forge-surface-800)',
+          900: 'var(--forge-surface-900)',
           background: 'var(--forge-surface-background)',
           raised: 'var(--forge-surface-raised)',
           overlay: 'var(--forge-surface-overlay)',

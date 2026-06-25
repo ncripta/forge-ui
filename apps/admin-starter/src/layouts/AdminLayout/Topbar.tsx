@@ -1,11 +1,21 @@
 import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { useTheme } from '@/providers/ThemeProvider';
-import { Button, Avatar, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator } from '@forge-ui/react';
+import {
+  Button, Icon, Avatar,
+  DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
+} from '@forge-ui/react';
 import { useNavigate } from 'react-router-dom';
 
+const COLOR_THEMES = [
+  { value: '', label: 'Indigo' },
+  { value: 'emerald', label: 'Emerald' },
+  { value: 'rose', label: 'Rose' },
+  { value: 'ocean', label: 'Ocean' },
+] as const;
+
 export function Topbar() {
-  const { toggleCollapsed } = useUIStore();
+  const { setSidebarOpen } = useUIStore();
   const { theme, setTheme } = useTheme();
   const { user, logout } = useAuthStore();
   const navigate = useNavigate();
@@ -15,48 +25,78 @@ export function Topbar() {
     navigate('/login');
   };
 
+  const handleColorTheme = (value: string) => {
+    if (value) {
+      document.documentElement.setAttribute('data-theme', value);
+    } else {
+      document.documentElement.removeAttribute('data-theme');
+    }
+  };
+
   return (
-    <header className="flex h-16 items-center justify-between border-b border-surface-border bg-surface-raised px-6">
+    <header className="h-16 bg-white border-b border-surface-200 flex items-center justify-between px-4 sm:px-6 lg:px-8 z-10">
       {/* Left */}
-      <div className="flex items-center gap-4">
-        <Button intent="ghost" size="icon" onClick={toggleCollapsed} aria-label="Toggle sidebar">
-          <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-            <path strokeLinecap="round" strokeLinejoin="round" d="M4 6h16M4 12h16M4 18h16" />
-          </svg>
-        </Button>
+      <div className="flex items-center gap-4 flex-1">
+        <button className="lg:hidden text-surface-500 hover:text-surface-900" onClick={() => setSidebarOpen(true)}>
+          <Icon name="Menu" size={24} />
+        </button>
+
+        {/* Search */}
+        <div className="hidden sm:block relative max-w-md w-full">
+          <Icon name="Search" size={16} className="text-surface-400 absolute left-3 top-1/2 -translate-y-1/2" />
+          <input
+            type="text"
+            placeholder="Buscar usuarios, proyectos... (Cmd+K)"
+            className="w-full bg-surface-50 border border-surface-200 text-surface-900 text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-500 placeholder:text-surface-400"
+          />
+        </div>
       </div>
 
       {/* Right */}
-      <div className="flex items-center gap-3">
-        {/* Theme toggle */}
-        <Button
-          intent="ghost"
-          size="icon"
+      <div className="flex items-center gap-3 sm:gap-4">
+        {/* Color Theme Switcher */}
+        <div className="hidden sm:flex items-center bg-surface-50 border border-surface-200 rounded-lg p-1">
+          <Icon name="Palette" size={16} className="text-surface-400 ml-2 mr-1" />
+          <select
+            onChange={(e) => handleColorTheme(e.target.value)}
+            className="text-xs font-medium bg-transparent text-surface-600 focus:outline-none cursor-pointer pr-2"
+          >
+            {COLOR_THEMES.map((t) => (
+              <option key={t.value} value={t.value}>{t.label}</option>
+            ))}
+          </select>
+        </div>
+
+        <div className="h-6 w-px bg-surface-200 hidden sm:block" />
+
+        {/* Dark mode toggle */}
+        <button
+          className="p-2 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-full"
           onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}
           aria-label="Toggle theme"
         >
-          {theme === 'dark' ? (
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M12 3v2.25m6.364.386l-1.591 1.591M21 12h-2.25m-.386 6.364l-1.591-1.591M12 18.75V21m-4.773-4.227l-1.591 1.591M5.25 12H3m4.227-4.773L5.636 5.636M15.75 12a3.75 3.75 0 11-7.5 0 3.75 3.75 0 017.5 0z" />
-            </svg>
-          ) : (
-            <svg className="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={2}>
-              <path strokeLinecap="round" strokeLinejoin="round" d="M21.752 15.002A9.718 9.718 0 0118 15.75c-5.385 0-9.75-4.365-9.75-9.75 0-1.33.266-2.597.748-3.752A9.753 9.753 0 003 11.25C3 16.635 7.365 21 12.75 21a9.753 9.753 0 009.002-5.998z" />
-            </svg>
-          )}
-        </Button>
+          <Icon name={theme === 'dark' ? 'Sun' : 'Moon'} size={20} />
+        </button>
+
+        {/* Notifications */}
+        <button className="relative p-2 text-surface-400 hover:text-surface-600 hover:bg-surface-100 rounded-full">
+          <Icon name="Bell" size={20} />
+          <span className="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full border-2 border-white" />
+        </button>
 
         {/* User menu */}
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
-            <button className="flex items-center gap-2 rounded-md p-1 hover:bg-surface-sunken transition-colors">
-              <Avatar size="sm" fallback={user?.name?.charAt(0) || 'U'} src={user?.avatar} alt={user?.name} />
+            <button className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-surface-100">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center font-semibold text-xs shadow-sm">
+                {user?.name?.charAt(0) || 'U'}
+              </div>
             </button>
           </DropdownMenuTrigger>
           <DropdownMenuContent align="end" className="w-48">
             <div className="px-2 py-1.5">
-              <p className="text-sm font-medium text-text-main">{user?.name || 'Usuario'}</p>
-              <p className="text-xs text-text-muted">{user?.email || ''}</p>
+              <p className="text-sm font-medium text-surface-900">{user?.name || 'Usuario'}</p>
+              <p className="text-xs text-surface-500">{user?.email || ''}</p>
             </div>
             <DropdownMenuSeparator />
             <DropdownMenuItem onClick={() => navigate('/settings')}>Configuración</DropdownMenuItem>
