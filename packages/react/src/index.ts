@@ -35,3 +35,31 @@ export {
   DialogClose,
 } from './components/Dialog';
 export { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from './components/Tooltip';
+export {
+  Sheet,
+  SheetTrigger,
+  SheetClose,
+  SheetOverlay,
+  SheetContent,
+  SheetHeader,
+  SheetFooter,
+  SheetTitle,
+  SheetDescription,
+  sheetContentVariants,
+  type SheetContentProps,
+} from './components/Sheet';
+
+// Data Table
+export {
+  DataTable,
+  Table,
+  TableHeader,
+  TableBody,
+  TableRow,
+  TableHead,
+  TableCell,
+  type DataTableProps,
+  type ColumnDef,
+  type SortingState,
+  type RowSelectionState,
+} from './components/DataTable';
