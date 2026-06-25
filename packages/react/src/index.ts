@@ -89,3 +89,31 @@ export {
   type DonutChartProps,
   type ChartDataPoint,
 } from './components/Chart';
+
+// DropdownMenu
+export {
+  DropdownMenu,
+  DropdownMenuTrigger,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuLabel,
+  DropdownMenuSeparator,
+  DropdownMenuShortcut,
+  DropdownMenuGroup,
+  DropdownMenuPortal,
+  DropdownMenuSub,
+  DropdownMenuSubTrigger,
+  DropdownMenuSubContent,
+} from './components/DropdownMenu';
+
+// Toast
+export { Toaster, toast, type ToasterProps } from './components/Toast';
+
+// Alert
+export { Alert, AlertTitle, AlertDescription, alertVariants, type AlertProps } from './components/Alert';
+
+// Breadcrumbs
+export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbItem } from './components/Breadcrumbs';
+
+// Pagination
+export { Pagination, type PaginationProps } from './components/Pagination';
