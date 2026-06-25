@@ -1,0 +1,11 @@
+{
+  "radius": {
+    "none": { "value": "0px" },
+    "sm": { "value": "4px", "comment": "Checkboxes, tags pequeños" },
+    "md": { "value": "8px", "comment": "Botones, inputs" },
+    "lg": { "value": "12px", "comment": "Tarjetas, modales" },
+    "xl": { "value": "16px", "comment": "Contenedores destacados" },
+    "2xl": { "value": "20px", "comment": "Hero sections, imágenes grandes" },
+    "full": { "value": "9999px", "comment": "Avatares, badges circulares" }
+  }
+}

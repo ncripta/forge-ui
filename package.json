@@ -12,16 +12,19 @@
     "changeset": "changeset",
     "version-packages": "changeset version",
     "release": "changeset publish",
-    "build:tokens": "npm run build -w packages/tokens",
-    "build:css": "npm run build -w packages/css",
-    "build:tailwind": "npm run build -w packages/tailwind",
+    "build:tokens": "tsc -p packages/tokens/tsconfig.json",
+    "build:css": "tsx packages/css/src/build.ts",
+    "build:tailwind": "tsc -p packages/tailwind/tsconfig.json",
     "build:core": "npm run build:tokens && npm run build:css && npm run build:tailwind"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",
     "@commitlint/cli": "^19.0.0",
     "@commitlint/config-conventional": "^19.0.0",
-    "husky": "^9.0.0"
+    "@types/node": "^26.0.1",
+    "husky": "^9.0.0",
+    "tsx": "^4.22.4",
+    "typescript": "^6.0.3"
   },
   "engines": {
     "node": ">=18.0.0"

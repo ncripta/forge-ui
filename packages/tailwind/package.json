@@ -2,12 +2,19 @@
   "name": "@forge-ui/tailwind",
   "version": "0.1.0",
   "description": "Tailwind CSS preset powered by Forge UI design tokens",
-  "main": "src/preset.js",
+  "main": "dist/preset.js",
+  "types": "dist/preset.d.ts",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "build": "echo \"Tailwind preset build pending\" && exit 0"
+    "build": "tsc"
   },
   "dependencies": {
     "@forge-ui/css": "*"
+  },
+  "devDependencies": {
+    "tailwindcss": "^3.4.19"
   },
   "license": "UNLICENSED"
 }

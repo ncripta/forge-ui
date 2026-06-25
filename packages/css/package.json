@@ -3,8 +3,11 @@
   "version": "0.1.0",
   "description": "CSS Variables generator from Forge UI tokens",
   "main": "dist/theme-base.css",
+  "files": [
+    "dist/**"
+  ],
   "scripts": {
-    "build": "echo \"CSS build pipeline pending\" && exit 0"
+    "build": "tsx src/build.ts"
   },
   "dependencies": {
     "@forge-ui/tokens": "*"

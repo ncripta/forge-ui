@@ -2,13 +2,14 @@
   "name": "@forge-ui/tokens",
   "version": "0.1.0",
   "description": "Design tokens - Single Source of Truth for Forge UI",
-  "main": "index.js",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
   "files": [
-    "src/**",
-    "index.js"
+    "dist/**",
+    "src/**"
   ],
   "scripts": {
-    "build": "echo \"Token build pipeline (Phase 2)\" && exit 0"
+    "build": "tsc"
   },
   "keywords": ["design-tokens", "forge-ui"],
   "license": "UNLICENSED"
