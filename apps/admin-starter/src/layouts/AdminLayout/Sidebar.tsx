@@ -3,7 +3,7 @@ import { navigationMenu, type NavItem } from '@/config/navigation';
 import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
-import { Badge, ScrollArea } from '@forge-ui/react';
+import { Badge, ScrollArea, Icon, type IconName } from '@forge-ui/react';
 import { cn } from '@forge-ui/react';
 
 function NavItemLink({ item, collapsed }: { item: NavItem; collapsed: boolean }) {
@@ -19,7 +19,7 @@ function NavItemLink({ item, collapsed }: { item: NavItem; collapsed: boolean })
         )
       }
     >
-      <span className="shrink-0 h-5 w-5" />
+      <span className="shrink-0 h-5 w-5"><Icon name={item.icon as IconName} size={18} /></span>
       {!collapsed && (
         <>
           <span className="truncate">{item.title}</span>

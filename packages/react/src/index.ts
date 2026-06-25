@@ -197,3 +197,6 @@ export { ChatBubble, ChatTyping, type ChatBubbleProps } from './components/ChatB
 
 // CodeBlock
 export { CodeBlock, type CodeBlockProps } from './components/CodeBlock';
+
+// Icon
+export { Icon, icons, type IconProps, type IconName } from './components/Icon';
