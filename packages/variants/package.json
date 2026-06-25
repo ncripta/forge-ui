@@ -1,0 +1,21 @@
+{
+  "name": "@forge-ui/variants",
+  "version": "0.1.0",
+  "description": "Shared CVA variant definitions for Forge UI component libraries",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "module": "dist/index.mjs",
+  "files": [
+    "dist/**"
+  ],
+  "scripts": {
+    "build": "tsup && tsc --emitDeclarationOnly"
+  },
+  "dependencies": {
+    "class-variance-authority": "^0.7.0"
+  },
+  "devDependencies": {
+    "tsup": "^8.0.0"
+  },
+  "license": "UNLICENSED"
+}

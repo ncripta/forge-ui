@@ -8,6 +8,5 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-  sheetContentVariants,
   type SheetContentProps,
 } from './Sheet';

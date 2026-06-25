@@ -1,20 +1,7 @@
 import * as React from 'react';
-import { cva, type VariantProps } from 'class-variance-authority';
+import { type VariantProps } from 'class-variance-authority';
+import { spinnerVariants } from '@forge-ui/variants';
 import { cn } from '../../utils/cn';
-
-const spinnerVariants = cva('animate-spin text-primary-main', {
-  variants: {
-    size: {
-      sm: 'h-4 w-4',
-      md: 'h-6 w-6',
-      lg: 'h-8 w-8',
-      xl: 'h-12 w-12',
-    },
-  },
-  defaultVariants: {
-    size: 'md',
-  },
-});
 
 export interface SpinnerProps
   extends React.SVGAttributes<SVGSVGElement>,

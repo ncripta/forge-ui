@@ -1,1 +1,1 @@
-export { ChatBubble, ChatTyping, chatBubbleVariants, type ChatBubbleProps } from './ChatBubble';
+export { ChatBubble, ChatTyping, type ChatBubbleProps } from './ChatBubble';

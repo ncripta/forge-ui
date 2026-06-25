@@ -1,15 +1,27 @@
 // Utils
 export { cn } from './utils/cn';
 
+// Shared Variants (re-exported from @forge-ui/variants)
+export {
+  buttonVariants,
+  badgeVariants,
+  avatarVariants,
+  inputVariants,
+  alertVariants,
+  spinnerVariants,
+  sheetContentVariants,
+  chatBubbleVariants,
+} from '@forge-ui/variants';
+
 // Atomic Components
-export { Button, buttonVariants, type ButtonProps } from './components/Button';
-export { Badge, badgeVariants, type BadgeProps } from './components/Badge';
-export { Avatar, avatarVariants, type AvatarProps } from './components/Avatar';
+export { Button, type ButtonProps } from './components/Button';
+export { Badge, type BadgeProps } from './components/Badge';
+export { Avatar, type AvatarProps } from './components/Avatar';
 export { Separator, type SeparatorProps } from './components/Separator';
 
 // Form Components
 export { Label, type LabelProps } from './components/Label';
-export { Input, inputVariants, type InputProps } from './components/Input';
+export { Input, type InputProps } from './components/Input';
 export { Textarea, type TextareaProps } from './components/Textarea';
 export { Checkbox, type CheckboxProps } from './components/Checkbox';
 export { Switch, type SwitchProps } from './components/Switch';
@@ -18,7 +30,7 @@ export { Switch, type SwitchProps } from './components/Switch';
 export { Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from './components/Card';
 
 // Feedback
-export { Spinner, spinnerVariants, type SpinnerProps } from './components/Spinner';
+export { Spinner, type SpinnerProps } from './components/Spinner';
 export { Skeleton, type SkeletonProps } from './components/Skeleton';
 
 // Overlays
@@ -45,7 +57,6 @@ export {
   SheetFooter,
   SheetTitle,
   SheetDescription,
-  sheetContentVariants,
   type SheetContentProps,
 } from './components/Sheet';
 
@@ -110,7 +121,7 @@ export {
 export { Toaster, toast, type ToasterProps } from './components/Toast';
 
 // Alert
-export { Alert, AlertTitle, AlertDescription, alertVariants, type AlertProps } from './components/Alert';
+export { Alert, AlertTitle, AlertDescription, type AlertProps } from './components/Alert';
 
 // Breadcrumbs
 export { Breadcrumbs, type BreadcrumbsProps, type BreadcrumbItem } from './components/Breadcrumbs';
@@ -182,7 +193,7 @@ export { Calendar, type CalendarProps } from './components/Calendar';
 export { DatePicker, type DatePickerProps } from './components/DatePicker';
 
 // ChatBubble
-export { ChatBubble, ChatTyping, chatBubbleVariants, type ChatBubbleProps } from './components/ChatBubble';
+export { ChatBubble, ChatTyping, type ChatBubbleProps } from './components/ChatBubble';
 
 // CodeBlock
 export { CodeBlock, type CodeBlockProps } from './components/CodeBlock';
