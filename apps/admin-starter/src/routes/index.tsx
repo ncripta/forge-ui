@@ -4,27 +4,31 @@ import { AuthLayout } from '@/layouts/AuthLayout/AuthLayout';
 import { ProtectedRoute, PublicOnlyRoute } from './guards';
 import { DashboardPage } from '@/pages/Dashboard';
 import { LoginPage } from '@/pages/Login';
+import { UsersPage } from '@/pages/users/UsersPage';
+import { SettingsPage } from '@/pages/settings/SettingsPage';
 
 export function AppRouter() {
   return (
     <Routes>
-      {/* Public routes (login, register) */}
+      {/* Public routes */}
       <Route element={<PublicOnlyRoute />}>
         <Route element={<AuthLayout />}>
           <Route path="/login" element={<LoginPage />} />
         </Route>
       </Route>
 
-      {/* Protected routes (admin panel) */}
+      {/* Protected routes */}
       <Route element={<ProtectedRoute />}>
         <Route element={<AdminLayout />}>
           <Route path="/dashboard" element={<DashboardPage />} />
-          <Route path="*" element={<DashboardPage />} />
+          <Route path="/users" element={<UsersPage />} />
+          <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>
 
-      {/* Redirect root */}
+      {/* Redirects */}
       <Route path="/" element={<Navigate to="/dashboard" replace />} />
+      <Route path="*" element={<Navigate to="/dashboard" replace />} />
     </Routes>
   );
 }
