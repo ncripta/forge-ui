@@ -5,7 +5,7 @@ import {
   Button, Badge, Icon, Input, Card, CardContent,
   Tabs, TabsList, TabsTrigger,
   AvatarGroup, Progress, Label, Textarea, Spinner,
-  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
+  Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
   toast,
@@ -28,9 +28,20 @@ const ICON_OPTIONS: { value: string; label: string; bg: string }[] = [
   { value: 'Server', label: 'Backend', bg: 'bg-emerald-50 text-emerald-600' },
 ];
 
+const STATUS_OPTIONS: { value: ProjectRecord['status']; label: string }[] = [
+  { value: 'active', label: 'En progreso' },
+  { value: 'review', label: 'Revisión' },
+  { value: 'completed', label: 'Completado' },
+  { value: 'archived', label: 'Archivado' },
+];
+
 // --- Project Card ---
 
-function ProjectCard({ project, onDelete }: { project: ProjectRecord; onDelete: (id: string) => void }) {
+function ProjectCard({ project, onEdit, onDelete }: {
+  project: ProjectRecord;
+  onEdit: (project: ProjectRecord) => void;
+  onDelete: (id: string) => void;
+}) {
   const status = statusConfig[project.status];
 
   return (
@@ -47,8 +58,7 @@ function ProjectCard({ project, onDelete }: { project: ProjectRecord; onDelete: 
               </Button>
             </DropdownMenuTrigger>
             <DropdownMenuContent align="end">
-              <DropdownMenuItem>Editar</DropdownMenuItem>
-              <DropdownMenuItem>Duplicar</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onEdit(project)}>Editar</DropdownMenuItem>
               <DropdownMenuSeparator />
               <DropdownMenuItem onClick={() => onDelete(project.id)} className="text-danger-main">
                 Eliminar
@@ -59,7 +69,10 @@ function ProjectCard({ project, onDelete }: { project: ProjectRecord; onDelete: 
 
         <div className="mb-4 flex-1">
           <div className="flex items-center gap-2 mb-1">
-            <h3 className="text-lg font-bold text-surface-900 group-hover:text-primary-600 transition-colors cursor-pointer">
+            <h3
+              className="text-lg font-bold text-surface-900 group-hover:text-primary-600 transition-colors cursor-pointer"
+              onClick={() => onEdit(project)}
+            >
               {project.name}
             </h3>
             <Badge intent={status.intent} variant="outline">{status.label}</Badge>
@@ -87,57 +100,93 @@ function ProjectCard({ project, onDelete }: { project: ProjectRecord; onDelete: 
   );
 }
 
-// --- New Project Dialog ---
+// --- Project Form Dialog (Create / Edit) ---
 
-function NewProjectDialog() {
+function ProjectFormDialog({ project, open, onOpenChange }: {
+  project: ProjectRecord | null;
+  open: boolean;
+  onOpenChange: (open: boolean) => void;
+}) {
   const queryClient = useQueryClient();
-  const [open, setOpen] = useState(false);
-  const [iconIdx, setIconIdx] = useState('0');
+  const isEditing = !!project;
+
+  const defaultIconIdx = project
+    ? String(ICON_OPTIONS.findIndex((o) => o.value === project.icon) ?? 0)
+    : '0';
+
+  const [iconIdx, setIconIdx] = useState(defaultIconIdx);
+  const [status, setStatus] = useState<ProjectRecord['status']>(project?.status || 'active');
+
+  // Reset state when dialog opens with different project
+  const handleOpenChange = (value: boolean) => {
+    if (value && project) {
+      setIconIdx(String(ICON_OPTIONS.findIndex((o) => o.value === project.icon) ?? 0));
+      setStatus(project.status);
+    } else if (value && !project) {
+      setIconIdx('0');
+      setStatus('active');
+    }
+    onOpenChange(value);
+  };
 
   const createMutation = useMutation({
     mutationFn: (data: Pick<ProjectRecord, 'name' | 'description' | 'icon' | 'iconBg'>) =>
       ProjectService.create(data),
-    onSuccess: (project) => {
+    onSuccess: (created) => {
       queryClient.invalidateQueries({ queryKey: ['projects'] });
-      toast.success(`Proyecto "${project.name}" creado correctamente`);
-      setOpen(false);
+      toast.success(`Proyecto "${created.name}" creado`);
+      onOpenChange(false);
     },
   });
+
+  const updateMutation = useMutation({
+    mutationFn: ({ id, data }: { id: string; data: Partial<ProjectRecord> }) =>
+      ProjectService.update(id, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      toast.success('Proyecto actualizado');
+      onOpenChange(false);
+    },
+  });
+
+  const isPending = createMutation.isPending || updateMutation.isPending;
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const form = new FormData(e.currentTarget);
     const selectedIcon = ICON_OPTIONS[Number(iconIdx)]!;
 
-    createMutation.mutate({
+    const payload = {
       name: form.get('name') as string,
       description: form.get('description') as string,
       icon: selectedIcon.value,
       iconBg: selectedIcon.bg,
-    });
+    };
+
+    if (isEditing) {
+      updateMutation.mutate({ id: project.id, data: { ...payload, status } });
+    } else {
+      createMutation.mutate(payload);
+    }
   };
 
   return (
-    <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <Button intent="primary">
-          <Icon name="Plus" size={16} />
-          Nuevo Proyecto
-        </Button>
-      </DialogTrigger>
+    <Dialog open={open} onOpenChange={handleOpenChange}>
       <DialogContent>
         <DialogHeader>
-          <DialogTitle>Crear nuevo proyecto</DialogTitle>
-          <DialogDescription>Completa la información para iniciar un nuevo espacio de trabajo.</DialogDescription>
+          <DialogTitle>{isEditing ? 'Editar proyecto' : 'Crear nuevo proyecto'}</DialogTitle>
+          <DialogDescription>
+            {isEditing ? 'Modifica la información del proyecto.' : 'Completa la información para iniciar un nuevo espacio de trabajo.'}
+          </DialogDescription>
         </DialogHeader>
         <form onSubmit={handleSubmit} className="space-y-4 mt-4">
           <div className="space-y-2">
             <Label htmlFor="name" required>Nombre del proyecto</Label>
-            <Input id="name" name="name" placeholder="Ej: Landing Page v2" required />
+            <Input id="name" name="name" placeholder="Ej: Landing Page v2" defaultValue={project?.name} required />
           </div>
           <div className="space-y-2">
             <Label htmlFor="description">Descripción</Label>
-            <Textarea id="description" name="description" placeholder="Describe brevemente el objetivo del proyecto..." />
+            <Textarea id="description" name="description" placeholder="Describe brevemente el objetivo..." defaultValue={project?.description} />
           </div>
           <div className="space-y-2">
             <Label>Categoría</Label>
@@ -152,11 +201,26 @@ function NewProjectDialog() {
               </SelectContent>
             </Select>
           </div>
+          {isEditing && (
+            <div className="space-y-2">
+              <Label>Estado</Label>
+              <Select value={status} onValueChange={(v) => setStatus(v as ProjectRecord['status'])}>
+                <SelectTrigger>
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  {STATUS_OPTIONS.map((opt) => (
+                    <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                  ))}
+                </SelectContent>
+              </Select>
+            </div>
+          )}
           <DialogFooter className="pt-4">
-            <DialogClose asChild>
-              <Button type="button" intent="secondary">Cancelar</Button>
-            </DialogClose>
-            <Button type="submit" intent="primary" loading={createMutation.isPending}>Crear proyecto</Button>
+            <Button type="button" intent="secondary" onClick={() => onOpenChange(false)}>Cancelar</Button>
+            <Button type="submit" intent="primary" loading={isPending}>
+              {isEditing ? 'Guardar cambios' : 'Crear proyecto'}
+            </Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -189,10 +253,14 @@ export function ProjectsPage() {
   const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
+  const [dialogOpen, setDialogOpen] = useState(false);
+  const [editingProject, setEditingProject] = useState<ProjectRecord | null>(null);
+  const [showFilters, setShowFilters] = useState(false);
+  const [filterCategory, setFilterCategory] = useState('');
 
   const filters: ProjectFilters = {
     ...(search && { search }),
-    ...(tab !== 'all' && { status: tab === 'active' ? 'active' : tab }),
+    ...(tab !== 'all' && { status: tab }),
   };
 
   const { data, isLoading } = useQuery({
@@ -208,6 +276,24 @@ export function ProjectsPage() {
     },
   });
 
+  const handleEdit = (project: ProjectRecord) => {
+    setEditingProject(project);
+    setDialogOpen(true);
+  };
+
+  const handleCreate = () => {
+    setEditingProject(null);
+    setDialogOpen(true);
+  };
+
+  // Filtro local por categoría (icon)
+  const filteredData = data?.data.filter((p) => {
+    if (!filterCategory) return true;
+    return p.icon === filterCategory;
+  });
+
+  const hasActiveFilters = !!filterCategory;
+
   return (
     <div className="max-w-7xl mx-auto space-y-6">
       {/* Page Header */}
@@ -217,13 +303,52 @@ export function ProjectsPage() {
           <p className="text-sm text-surface-500 mt-1">Gestiona y monitorea tus espacios de trabajo activos.</p>
         </div>
         <div className="flex items-center gap-3">
-          <Button intent="secondary">
+          <Button intent="secondary" onClick={() => setShowFilters(!showFilters)}>
             <Icon name="Filter" size={16} />
             Filtros
+            {hasActiveFilters && (
+              <Badge intent="primary" variant="solid" className="ml-1 text-[10px] px-1.5">1</Badge>
+            )}
           </Button>
-          <NewProjectDialog />
+          <Button intent="primary" onClick={handleCreate}>
+            <Icon name="Plus" size={16} />
+            Nuevo Proyecto
+          </Button>
         </div>
       </div>
+
+      {/* Filters Panel */}
+      {showFilters && (
+        <Card>
+          <CardContent className="p-4">
+            <div className="flex flex-wrap items-end gap-4">
+              <div className="space-y-1.5">
+                <Label className="text-xs">Categoría</Label>
+                <Select value={filterCategory} onValueChange={setFilterCategory}>
+                  <SelectTrigger className="w-[160px]">
+                    <SelectValue placeholder="Todas" />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {ICON_OPTIONS.map((opt) => (
+                      <SelectItem key={opt.value} value={opt.value}>{opt.label}</SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              {hasActiveFilters && (
+                <Button
+                  intent="ghost"
+                  onClick={() => setFilterCategory('')}
+                  className="text-surface-500"
+                >
+                  <Icon name="X" size={14} />
+                  Limpiar filtros
+                </Button>
+              )}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
       {/* Tabs & Search */}
       <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
@@ -251,12 +376,24 @@ export function ProjectsPage() {
         </div>
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {data?.data.map((project) => (
-            <ProjectCard key={project.id} project={project} onDelete={(id) => deleteMutation.mutate(id)} />
+          {filteredData?.map((project) => (
+            <ProjectCard
+              key={project.id}
+              project={project}
+              onEdit={handleEdit}
+              onDelete={(id) => deleteMutation.mutate(id)}
+            />
           ))}
-          <NewProjectCard onClick={() => {}} />
+          <NewProjectCard onClick={handleCreate} />
         </div>
       )}
+
+      {/* Create / Edit Dialog */}
+      <ProjectFormDialog
+        project={editingProject}
+        open={dialogOpen}
+        onOpenChange={setDialogOpen}
+      />
     </div>
   );
 }
