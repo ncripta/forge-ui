@@ -17,8 +17,9 @@
     "build:tailwind": "tsc -p packages/tailwind/tsconfig.json",
     "build:variants": "npm run build -w packages/variants",
     "build:react": "npm run build -w packages/react",
+    "build:vue": "npm run build -w packages/vue",
     "build:core": "npm run build:tokens && npm run build:css && npm run build:tailwind && npm run build:variants",
-    "build:all": "npm run build:core && npm run build:react"
+    "build:all": "npm run build:core && npm run build:react && npm run build:vue"
   },
   "devDependencies": {
     "@changesets/cli": "^2.27.0",
