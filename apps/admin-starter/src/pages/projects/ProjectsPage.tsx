@@ -1,9 +1,12 @@
 import { useState } from 'react';
 import {
   Button, Badge, Icon, Input, Card, CardContent,
-  Tabs, TabsList, TabsTrigger, TabsContent,
-  AvatarGroup, Progress,
+  Tabs, TabsList, TabsTrigger,
+  AvatarGroup, Progress, Label, Textarea,
+  Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
+  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
+  toast,
   type IconName,
 } from '@forge-ui/react';
 
@@ -20,7 +23,7 @@ interface Project {
   updatedAt: string;
 }
 
-const projects: Project[] = [
+const INITIAL_PROJECTS: Project[] = [
   {
     id: '1',
     name: 'E-commerce Portal',
@@ -65,13 +68,23 @@ const statusConfig = {
   archived: { label: 'Archivado', intent: 'default' as const },
 };
 
+const ICON_OPTIONS: { value: IconName; label: string; bg: string }[] = [
+  { value: 'ShoppingCart', label: 'E-commerce', bg: 'bg-blue-50 text-blue-600' },
+  { value: 'Bot', label: 'IA / Agentes', bg: 'bg-purple-50 text-purple-600' },
+  { value: 'BarChart2', label: 'Analítica', bg: 'bg-rose-50 text-rose-600' },
+  { value: 'Globe', label: 'Web', bg: 'bg-sky-50 text-sky-600' },
+  { value: 'Smartphone', label: 'Mobile', bg: 'bg-amber-50 text-amber-600' },
+  { value: 'Server', label: 'Backend', bg: 'bg-emerald-50 text-emerald-600' },
+];
+
+// --- Project Card ---
+
 function ProjectCard({ project }: { project: Project }) {
   const status = statusConfig[project.status];
 
   return (
     <Card className="p-5 hover:shadow-md transition-shadow group flex flex-col h-full">
       <CardContent className="p-0 flex flex-col h-full">
-        {/* Header */}
         <div className="flex justify-between items-start mb-4">
           <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${project.iconBg}`}>
             <Icon name={project.icon} size={24} />
@@ -91,7 +104,6 @@ function ProjectCard({ project }: { project: Project }) {
           </DropdownMenu>
         </div>
 
-        {/* Body */}
         <div className="mb-4 flex-1">
           <div className="flex items-center gap-2 mb-1">
             <h3 className="text-lg font-bold text-surface-900 group-hover:text-primary-600 transition-colors cursor-pointer">
@@ -102,7 +114,6 @@ function ProjectCard({ project }: { project: Project }) {
           <p className="text-sm text-surface-500 line-clamp-2">{project.description}</p>
         </div>
 
-        {/* Progress */}
         <div className="mb-4">
           <div className="flex justify-between text-xs font-medium mb-1.5">
             <span className="text-surface-500">Progreso de tareas</span>
@@ -111,7 +122,6 @@ function ProjectCard({ project }: { project: Project }) {
           <Progress value={project.progress} color={project.progressColor} />
         </div>
 
-        {/* Footer */}
         <div className="flex items-center justify-between border-t border-surface-200 pt-4 mt-auto">
           <AvatarGroup avatars={project.members} max={3} size="sm" />
           <span className="text-xs text-surface-400 flex items-center gap-1">
@@ -124,9 +134,96 @@ function ProjectCard({ project }: { project: Project }) {
   );
 }
 
-function NewProjectCard() {
+// --- New Project Dialog ---
+
+function NewProjectDialog({ onCreated }: { onCreated: (project: Project) => void }) {
+  const [open, setOpen] = useState(false);
+  const [loading, setLoading] = useState(false);
+  const [iconIdx, setIconIdx] = useState('0');
+
+  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    setLoading(true);
+
+    const form = new FormData(e.currentTarget);
+    const selectedIcon = ICON_OPTIONS[Number(iconIdx)]!;
+
+    // Simular latencia
+    await new Promise((r) => setTimeout(r, 500));
+
+    const newProject: Project = {
+      id: String(Date.now()),
+      name: form.get('name') as string,
+      description: form.get('description') as string,
+      icon: selectedIcon.value,
+      iconBg: selectedIcon.bg,
+      status: 'active',
+      progress: 0,
+      members: [{ fallback: 'TU' }],
+      updatedAt: 'Justo ahora',
+    };
+
+    onCreated(newProject);
+    setLoading(false);
+    setOpen(false);
+    toast.success(`Proyecto "${newProject.name}" creado correctamente`);
+  };
+
   return (
-    <button className="border-2 border-dashed border-surface-200 rounded-lg p-5 hover:border-primary-400 hover:bg-primary-50 transition-colors group flex flex-col items-center justify-center h-full min-h-[260px]">
+    <Dialog open={open} onOpenChange={setOpen}>
+      <DialogTrigger asChild>
+        <Button intent="primary">
+          <Icon name="Plus" size={16} />
+          Nuevo Proyecto
+        </Button>
+      </DialogTrigger>
+      <DialogContent>
+        <DialogHeader>
+          <DialogTitle>Crear nuevo proyecto</DialogTitle>
+          <DialogDescription>Completa la información para iniciar un nuevo espacio de trabajo.</DialogDescription>
+        </DialogHeader>
+        <form onSubmit={handleSubmit} className="space-y-4 mt-4">
+          <div className="space-y-2">
+            <Label htmlFor="name" required>Nombre del proyecto</Label>
+            <Input id="name" name="name" placeholder="Ej: Landing Page v2" required />
+          </div>
+          <div className="space-y-2">
+            <Label htmlFor="description">Descripción</Label>
+            <Textarea id="description" name="description" placeholder="Describe brevemente el objetivo del proyecto..." />
+          </div>
+          <div className="space-y-2">
+            <Label>Categoría</Label>
+            <Select value={iconIdx} onValueChange={setIconIdx}>
+              <SelectTrigger>
+                <SelectValue placeholder="Seleccionar categoría" />
+              </SelectTrigger>
+              <SelectContent>
+                {ICON_OPTIONS.map((opt, i) => (
+                  <SelectItem key={opt.value} value={String(i)}>{opt.label}</SelectItem>
+                ))}
+              </SelectContent>
+            </Select>
+          </div>
+          <DialogFooter className="pt-4">
+            <DialogClose asChild>
+              <Button type="button" intent="secondary">Cancelar</Button>
+            </DialogClose>
+            <Button type="submit" intent="primary" loading={loading}>Crear proyecto</Button>
+          </DialogFooter>
+        </form>
+      </DialogContent>
+    </Dialog>
+  );
+}
+
+// --- New Project Card (placeholder visual) ---
+
+function NewProjectCard({ onClick }: { onClick: () => void }) {
+  return (
+    <button
+      onClick={onClick}
+      className="border-2 border-dashed border-surface-200 rounded-lg p-5 hover:border-primary-400 hover:bg-primary-50 transition-colors group flex flex-col items-center justify-center h-full min-h-[260px]"
+    >
       <div className="w-14 h-14 rounded-full bg-surface-100 text-surface-400 group-hover:bg-primary-100 group-hover:text-primary-600 flex items-center justify-center mb-4 transition-colors">
         <Icon name="Plus" size={24} />
       </div>
@@ -138,12 +235,20 @@ function NewProjectCard() {
   );
 }
 
+// --- Page ---
+
 export function ProjectsPage() {
+  const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
+  const [dialogOpen, setDialogOpen] = useState(false);
+
+  const handleCreated = (project: Project) => {
+    setProjects((prev) => [project, ...prev]);
+  };
 
   const filtered = projects.filter((p) => {
-    if (tab === 'active') return p.status === 'active';
+    if (tab === 'active') return p.status === 'active' || p.status === 'review';
     if (tab === 'completed') return p.status === 'completed';
     if (tab === 'archived') return p.status === 'archived';
     return true;
@@ -164,10 +269,7 @@ export function ProjectsPage() {
             <Icon name="Filter" size={16} />
             Filtros
           </Button>
-          <Button intent="primary">
-            <Icon name="Plus" size={16} />
-            Nuevo Proyecto
-          </Button>
+          <NewProjectDialog onCreated={handleCreated} />
         </div>
       </div>
 
@@ -195,7 +297,7 @@ export function ProjectsPage() {
         {filtered.map((project) => (
           <ProjectCard key={project.id} project={project} />
         ))}
-        <NewProjectCard />
+        <NewProjectCard onClick={() => setDialogOpen(true)} />
       </div>
     </div>
   );
