@@ -8,10 +8,10 @@ import {
 import { useNavigate } from 'react-router-dom';
 
 const COLOR_THEMES = [
-  { value: '', label: 'Indigo' },
-  { value: 'emerald', label: 'Emerald' },
-  { value: 'rose', label: 'Rose' },
-  { value: 'ocean', label: 'Ocean' },
+  { value: '', label: 'Indigo', dot: '#6366f1' },
+  { value: 'emerald', label: 'Emerald', dot: '#10b981' },
+  { value: 'rose', label: 'Rose', dot: '#f43f5e' },
+  { value: 'ocean', label: 'Ocean', dot: '#0ea5e9' },
 ] as const;
 
 export function Topbar() {
@@ -47,7 +47,7 @@ export function Topbar() {
           <input
             type="text"
             placeholder="Buscar usuarios, proyectos... (Cmd+K)"
-            className="w-full bg-surface-50 border border-surface-200 text-surface-900 text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-500 placeholder:text-surface-400"
+            className="w-full bg-surface-100 border border-surface-200 text-surface-900 text-sm rounded-lg pl-10 pr-4 py-2 focus:outline-none focus:ring-2 focus:ring-primary-100 focus:border-primary-500 placeholder:text-surface-400"
           />
         </div>
       </div>
@@ -55,17 +55,23 @@ export function Topbar() {
       {/* Right */}
       <div className="flex items-center gap-3 sm:gap-4">
         {/* Color Theme Switcher */}
-        <div className="hidden sm:flex items-center bg-surface-50 border border-surface-200 rounded-lg p-1">
-          <Icon name="Palette" size={16} className="text-surface-400 ml-2 mr-1" />
-          <select
-            onChange={(e) => handleColorTheme(e.target.value)}
-            className="text-xs font-medium bg-transparent text-surface-600 focus:outline-none cursor-pointer pr-2"
-          >
+        <DropdownMenu>
+          <DropdownMenuTrigger asChild>
+            <button className="hidden sm:flex items-center gap-1.5 bg-surface-100 border border-surface-200 rounded-lg px-3 py-1.5 text-xs font-medium text-surface-600 hover:bg-surface-200 transition-colors">
+              <Icon name="Palette" size={14} className="text-surface-400" />
+              Tema
+              <Icon name="ChevronDown" size={12} className="text-surface-400" />
+            </button>
+          </DropdownMenuTrigger>
+          <DropdownMenuContent align="end" className="w-36">
             {COLOR_THEMES.map((t) => (
-              <option key={t.value} value={t.value}>{t.label}</option>
+              <DropdownMenuItem key={t.value} onClick={() => handleColorTheme(t.value)}>
+                <span className="w-3 h-3 rounded-full mr-2" style={{ backgroundColor: t.dot }} />
+                {t.label}
+              </DropdownMenuItem>
             ))}
-          </select>
-        </div>
+          </DropdownMenuContent>
+        </DropdownMenu>
 
         <div className="h-6 w-px bg-surface-200 hidden sm:block" />
 
@@ -88,7 +94,7 @@ export function Topbar() {
         <DropdownMenu>
           <DropdownMenuTrigger asChild>
             <button className="flex items-center gap-2 p-1.5 rounded-lg hover:bg-surface-100">
-              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-600 to-primary-400 text-white flex items-center justify-center font-semibold text-xs shadow-sm">
+              <div className="w-8 h-8 rounded-full bg-gradient-to-tr from-primary-600 to-primary-400 text-primary-50 flex items-center justify-center font-semibold text-xs shadow-sm">
                 {user?.name?.charAt(0) || 'U'}
               </div>
             </button>

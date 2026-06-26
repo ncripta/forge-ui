@@ -1,10 +1,15 @@
-import { Card, CardHeader, CardTitle, CardContent, BarChart, LineChart, Icon, Badge } from '@forge-ui/react';
+import {
+  Card, CardHeader, CardTitle, CardContent,
+  Button, Badge, Avatar, Icon, LineChart,
+  Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
+  type IconName,
+} from '@forge-ui/react';
 
 const kpis = [
-  { label: 'Ingresos MRR', value: '$45,231.89', change: '+20.1%', icon: 'CreditCard' as const, iconBg: 'bg-primary-50 text-primary-600' },
-  { label: 'Usuarios Activos', value: '2,350', change: '+12.5%', icon: 'Users' as const, iconBg: 'bg-blue-50 text-blue-600' },
-  { label: 'Agentes Desplegados', value: '142', change: '+4.3%', icon: 'Cpu' as const, iconBg: 'bg-purple-50 text-purple-600' },
-  { label: 'Tasa de Errores', value: '1.2%', change: '-0.5%', icon: 'Activity' as const, iconBg: 'bg-rose-50 text-rose-600' },
+  { label: 'Ingresos MRR', value: '$45,231.89', change: '+20.1%', icon: 'CreditCard' as IconName, iconBg: 'bg-primary-50 text-primary-600' },
+  { label: 'Usuarios Activos', value: '2,350', change: '+12.5%', icon: 'Users' as IconName, iconBg: 'bg-blue-50 text-blue-600' },
+  { label: 'Agentes Desplegados', value: '142', change: '+4.3%', icon: 'Cpu' as IconName, iconBg: 'bg-purple-50 text-purple-600' },
+  { label: 'Tasa de Errores', value: '1.2%', change: '-0.5%', icon: 'Activity' as IconName, iconBg: 'bg-rose-50 text-rose-600' },
 ];
 
 const activityData = [
@@ -18,25 +23,17 @@ const activityData = [
 ];
 
 const recentUsers = [
-  { initials: 'DL', name: 'David López', email: 'david@ejemplo.com', status: 'Activo' },
-  { initials: 'MR', name: 'María Ruiz', email: 'maria@ejemplo.com', status: 'Offline' },
-  { initials: 'CJ', name: 'Carlos J.', email: 'carlos@agencia.ia', status: 'Activo' },
-  { initials: 'SP', name: 'Sara P.', email: 'sara@tech.co', status: 'Pausado' },
+  { name: 'David López', email: 'david@ejemplo.com', status: 'Activo' as const },
+  { name: 'María Ruiz', email: 'maria@ejemplo.com', status: 'Offline' as const },
+  { name: 'Carlos J.', email: 'carlos@agencia.ia', status: 'Activo' as const },
+  { name: 'Sara P.', email: 'sara@tech.co', status: 'Pausado' as const },
 ];
 
-function StatusBadge({ status }: { status: string }) {
-  const styles = {
-    Activo: 'bg-emerald-50 text-emerald-700 border-emerald-100',
-    Offline: 'bg-surface-100 text-surface-600 border-surface-200',
-    Pausado: 'bg-amber-50 text-amber-700 border-amber-100',
-  }[status] || 'bg-surface-100 text-surface-600 border-surface-200';
-
-  return (
-    <span className={`inline-flex items-center px-2 py-1 rounded-md text-xs font-medium border ${styles}`}>
-      {status}
-    </span>
-  );
-}
+const statusIntent = {
+  Activo: 'success',
+  Offline: 'default',
+  Pausado: 'warning',
+} as const;
 
 export function DashboardPage() {
   return (
@@ -47,80 +44,95 @@ export function DashboardPage() {
           <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Resumen de Plataforma</h1>
           <p className="text-sm text-surface-500 mt-1">Aquí tienes lo que está sucediendo hoy.</p>
         </div>
-        <button className="inline-flex items-center justify-center px-4 py-2 bg-primary-600 text-white text-sm font-medium rounded-lg hover:bg-primary-700 shadow-sm focus:ring-2 focus:ring-offset-2 focus:ring-primary-600">
-          <Icon name="Plus" size={16} className="mr-2" />
+        <Button intent="primary">
+          <Icon name="Plus" size={16} />
           Nuevo Proyecto
-        </button>
+        </Button>
       </div>
 
       {/* KPIs */}
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6">
         {kpis.map((kpi) => (
-          <div key={kpi.label} className="bg-surface-50 p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
-            <div className="flex justify-between items-start">
-              <p className="text-sm font-medium text-surface-500">{kpi.label}</p>
-              <div className={`p-2 rounded-lg ${kpi.iconBg}`}>
-                <Icon name={kpi.icon} size={16} />
+          <Card key={kpi.label}>
+            <CardContent className="p-6">
+              <div className="flex justify-between items-start">
+                <p className="text-sm font-medium text-surface-500">{kpi.label}</p>
+                <div className={`p-2 rounded-lg ${kpi.iconBg}`}>
+                  <Icon name={kpi.icon} size={16} />
+                </div>
               </div>
-            </div>
-            <div className="mt-4 flex items-baseline gap-2">
-              <h3 className="text-2xl font-bold text-surface-900">{kpi.value}</h3>
-              <span className="inline-flex items-center text-xs font-medium text-emerald-600 bg-emerald-50 px-2 py-0.5 rounded-full">
-                <Icon name={kpi.change.startsWith('-') ? 'TrendingDown' : 'TrendingUp'} size={12} className="mr-1" />
-                {kpi.change}
-              </span>
-            </div>
-          </div>
+              <div className="mt-4 flex items-baseline gap-2">
+                <h3 className="text-2xl font-bold text-surface-900">{kpi.value}</h3>
+                <Badge intent="success" variant="subtle">
+                  <Icon name={kpi.change.startsWith('-') ? 'TrendingDown' : 'TrendingUp'} size={12} />
+                  {kpi.change}
+                </Badge>
+              </div>
+            </CardContent>
+          </Card>
         ))}
       </div>
 
       {/* Main Content Grid */}
       <div className="grid grid-cols-1 xl:grid-cols-3 gap-6">
         {/* Chart Area */}
-        <div className="xl:col-span-2 bg-surface-50 p-6 rounded-xl border border-surface-100 shadow-sm flex flex-col">
-          <div className="flex justify-between items-center mb-6">
-            <div>
-              <h3 className="text-lg font-bold text-surface-900">Actividad del Sistema</h3>
-              <p className="text-sm text-surface-500">Ejecución de tareas y peticiones</p>
+        <Card className="xl:col-span-2">
+          <CardHeader>
+            <div className="flex justify-between items-center w-full">
+              <div>
+                <CardTitle>Actividad del Sistema</CardTitle>
+                <p className="text-sm text-surface-500 mt-1">Ejecución de tareas y peticiones</p>
+              </div>
+              <Select defaultValue="7d">
+                <SelectTrigger className="w-[160px]">
+                  <SelectValue />
+                </SelectTrigger>
+                <SelectContent>
+                  <SelectItem value="7d">Últimos 7 días</SelectItem>
+                  <SelectItem value="30d">Últimos 30 días</SelectItem>
+                </SelectContent>
+              </Select>
             </div>
-            <select className="text-sm bg-surface-50 border border-surface-200 rounded-lg px-3 py-1.5 text-surface-600 focus:ring-2 focus:ring-primary-100 focus:outline-none cursor-pointer">
-              <option>Últimos 7 días</option>
-              <option>Últimos 30 días</option>
-            </select>
-          </div>
-          <LineChart
-            data={activityData}
-            lines={[
-              { dataKey: 'peticiones', color: 'var(--forge-primary-500)' },
-              { dataKey: 'tareas', color: 'var(--forge-primary-300, #a5b4fc)' },
-            ]}
-            height={300}
-          />
-        </div>
+          </CardHeader>
+          <CardContent>
+            <LineChart
+              data={activityData}
+              lines={[
+                { dataKey: 'peticiones', color: 'var(--forge-primary-500)' },
+                { dataKey: 'tareas', color: 'var(--forge-primary-400)' },
+              ]}
+              height={300}
+            />
+          </CardContent>
+        </Card>
 
         {/* Recent Users */}
-        <div className="bg-surface-50 rounded-xl border border-surface-100 shadow-sm flex flex-col overflow-hidden">
-          <div className="p-6 border-b border-surface-100 flex justify-between items-center">
-            <h3 className="text-lg font-bold text-surface-900">Usuarios Recientes</h3>
-            <button className="text-sm font-medium text-primary-600 hover:text-primary-700">Ver todos</button>
-          </div>
-          <div className="divide-y divide-surface-50 overflow-y-auto">
-            {recentUsers.map((u) => (
-              <div key={u.email} className="p-4 flex items-center justify-between hover:bg-surface-50">
-                <div className="flex items-center gap-3">
-                  <div className="w-9 h-9 rounded-full bg-surface-100 flex items-center justify-center text-surface-600 font-semibold text-xs">
-                    {u.initials}
+        <Card className="overflow-hidden">
+          <CardHeader>
+            <div className="flex justify-between items-center w-full">
+              <CardTitle>Usuarios Recientes</CardTitle>
+              <Button intent="link" size="sm">Ver todos</Button>
+            </div>
+          </CardHeader>
+          <CardContent className="p-0">
+            <div className="divide-y divide-surface-200">
+              {recentUsers.map((u) => (
+                <div key={u.email} className="px-6 py-4 flex items-center justify-between hover:bg-surface-100 transition-colors">
+                  <div className="flex items-center gap-3">
+                    <Avatar size="sm" fallback={u.name.split(' ').map(w => w[0]).join('')} />
+                    <div>
+                      <p className="text-sm font-medium text-surface-900">{u.name}</p>
+                      <p className="text-xs text-surface-500">{u.email}</p>
+                    </div>
                   </div>
-                  <div>
-                    <p className="text-sm font-medium text-surface-900">{u.name}</p>
-                    <p className="text-xs text-surface-500">{u.email}</p>
-                  </div>
+                  <Badge intent={statusIntent[u.status]} variant="outline">
+                    {u.status}
+                  </Badge>
                 </div>
-                <StatusBadge status={u.status} />
-              </div>
-            ))}
-          </div>
-        </div>
+              ))}
+            </div>
+          </CardContent>
+        </Card>
       </div>
     </div>
   );
