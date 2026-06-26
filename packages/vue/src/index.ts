@@ -26,6 +26,12 @@ export { Textarea } from './components/Textarea';
 export { Checkbox } from './components/Checkbox';
 export { Switch } from './components/Switch';
 export { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectSeparator, SelectLabel } from './components/Select';
+export { RadioGroup, RadioGroupItem } from './components/RadioGroup';
+export { Combobox } from './components/Combobox';
+export { Slider } from './components/Slider';
+export { InputOTP } from './components/InputOTP';
+export { Dropzone } from './components/Dropzone';
+export { DatePicker } from './components/DatePicker';
 
 // Data Display
 export { Card, CardHeader, CardTitle, CardContent, CardFooter } from './components/Card';
@@ -35,19 +41,31 @@ export type { ColumnDef, SortingState, RowSelectionState } from './components/Da
 export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/Accordion';
 export { ScrollArea } from './components/ScrollArea';
 export { AvatarGroup } from './components/AvatarGroup';
+export { Tree } from './components/Tree';
+export { Calendar } from './components/Calendar';
 
 // Navigation
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/Tabs';
 export { Pagination } from './components/Pagination';
 export { Breadcrumbs } from './components/Breadcrumbs';
+export { Stepper } from './components/Stepper';
+export { Command, CommandInput } from './components/CommandPalette';
 
 // Overlays
 export { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose } from './components/Dialog';
 export { Sheet, SheetContent, SheetTrigger, SheetTitle, SheetDescription, SheetClose } from './components/Sheet';
 export { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuTrigger, DropdownMenuSeparator, DropdownMenuLabel } from './components/DropdownMenu';
+export { Popover, PopoverTrigger, PopoverClose } from './components/Popover';
+export { Tooltip } from './components/Tooltip';
+export { ContextMenu, ContextMenuItem, ContextMenuSeparator, ContextMenuLabel } from './components/ContextMenu';
 
 // Feedback
 export { Spinner } from './components/Spinner';
 export { Skeleton } from './components/Skeleton';
 export { Toaster, toast } from './components/Toast';
 export { Alert, AlertTitle, AlertDescription } from './components/Alert';
+
+// Specialized
+export { BarChart, LineChart, DonutChart } from './components/Chart';
+export { ChatBubble, ChatTyping } from './components/ChatBubble';
+export { CodeBlock } from './components/CodeBlock';

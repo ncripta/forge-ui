@@ -17,10 +17,12 @@
     "@forge-ui/variants": "*",
     "@lucide/vue": "^1.21.0",
     "@tanstack/vue-table": "^8.21.3",
+    "chart.js": "^4.5.1",
     "class-variance-authority": "^0.7.0",
     "clsx": "^2.1.0",
     "radix-vue": "^1.9.0",
     "tailwind-merge": "^2.5.0",
+    "vue-chartjs": "^5.3.3",
     "vue-sonner": "^2.0.9"
   },
   "devDependencies": {
