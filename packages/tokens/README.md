@@ -30,16 +30,18 @@ La intención de uso. Estos son los tokens que consumen las interfaces.
 tokens/
 ├── src/
 │   ├── base/
-│   │   ├── colors.json      ← Paletas completas (indigo, slate, emerald, red, amber)
-│   │   └── spacing.json     ← Escala de espaciado (sistema 4px)
+│   │   ├── colors.json        ← Paletas completas (indigo, slate, emerald, red, amber)
+│   │   └── spacing.json       ← Escala de espaciado (sistema 4px)
 │   └── semantic/
-│       ├── theme-light.json  ← Asignaciones semánticas para modo claro
-│       ├── theme-dark.json   ← Asignaciones semánticas para modo oscuro
-│       ├── typography.json   ← Familias, tamaños, pesos, line-heights
-│       ├── radius.json       ← Escala de border-radius
-│       ├── shadows.json      ← Sistema de elevaciones
-│       └── motion.json       ← Duraciones y curvas de animación
-├── index.js                  ← Exportador principal
+│       ├── theme-light.json   ← Asignaciones semánticas para modo claro
+│       ├── theme-dark.json    ← Asignaciones semánticas para modo oscuro
+│       ├── color-themes.json  ← Paletas de color switcheables (indigo, emerald, rose, ocean)
+│       ├── typography.json    ← Familias, tamaños, pesos, line-heights
+│       ├── radius.json        ← Escala de border-radius
+│       ├── shadows.json       ← Sistema de elevaciones
+│       └── motion.json        ← Duraciones y curvas de animación
+├── src/index.ts               ← Exportador TypeScript con interfaces tipadas
+├── tsconfig.json
 └── package.json
 ```
 
@@ -114,8 +116,8 @@ Sistema de múltiplos de 4px (18 valores):
 
 ## Uso
 
-```javascript
-const tokens = require('@forge-ui/tokens');
+```typescript
+import tokens from '@forge-ui/tokens';
 
 // Acceder a un primitivo
 tokens.colors.color.base.indigo["500"].value // → "#6366f1"
@@ -127,7 +129,9 @@ tokens.themeLight.semantic.primary.main.value // → "{color.base.indigo.500}"
 tokens.spacing.spacing["4"].value // → "16px"
 ```
 
-> Este paquete es consumido por `@forge-ui/css` (Fase 2) para compilar las variables CSS y por `@forge-ui/tailwind` para generar el preset de utilidades.
+Tipos exportados: `TokenValue`, `BaseColors`, `SemanticTheme`, `TypographyTokens`, `RadiusTokens`, `ShadowTokens`, `MotionTokens`.
+
+> Este paquete es consumido por `@forge-ui/css` para compilar las variables CSS y por `@forge-ui/tailwind` para generar el preset de utilidades.
 
 ---
 

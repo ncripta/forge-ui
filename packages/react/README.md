@@ -1,6 +1,6 @@
 # @forge-ui/react
 
-Librería de componentes React para Forge UI. Componentes presentacionales, accesibles y tematizados, construidos sobre los Design Tokens del sistema.
+Librería de componentes React para Forge UI. 40+ componentes presentacionales, accesibles y tematizados, construidos sobre los Design Tokens del sistema.
 
 ---
 
@@ -9,10 +9,15 @@ Librería de componentes React para Forge UI. Componentes presentacionales, acce
 | Herramienta | Rol |
 |-------------|-----|
 | Radix UI | Motor headless (accesibilidad, focus management, WAI-ARIA) |
-| CVA (class-variance-authority) | Mapeo de variantes a clases Tailwind |
+| CVA (class-variance-authority) | Mapeo de variantes (vía `@forge-ui/variants`) |
 | tailwind-merge + clsx | Fusión de clases sin conflictos |
+| Lucide React | Iconografía (1400+ iconos SVG) |
+| Recharts | Gráficos (BarChart, LineChart, DonutChart) |
+| cmdk | Command Palette |
+| Sonner | Toast notifications |
+| TanStack Table | DataTable avanzada |
 | tsup | Bundler (CJS + ESM) |
-| TypeScript | Tipado estricto en todos los componentes |
+| TypeScript | Tipado estricto |
 
 ## Instalación
 
@@ -20,12 +25,13 @@ Librería de componentes React para Forge UI. Componentes presentacionales, acce
 npm install @forge-ui/react @forge-ui/css @forge-ui/tailwind
 ```
 
-## Configuración Previa
+## Configuración
 
 ```css
 /* globals.css */
 @import '@forge-ui/css/dist/theme-base.css';
 @import '@forge-ui/css/dist/theme-dark.css';
+@import '@forge-ui/css/dist/color-themes.css';
 ```
 
 ```javascript
@@ -35,128 +41,118 @@ module.exports = {
   content: [
     './src/**/*.{ts,tsx}',
     './node_modules/@forge-ui/react/dist/**/*.{js,mjs}',
+    './node_modules/@forge-ui/variants/dist/**/*.{js,mjs}',
   ],
 }
 ```
 
 ---
 
-## Componentes Disponibles
+## Componentes (Inventario Completo)
 
 ### Atómicos
 
-| Componente | Props Clave | Descripción |
-|------------|-------------|-------------|
-| `Button` | `intent`, `size`, `loading`, `asChild` | Botón con 5 intents y 4 tamaños |
-| `Badge` | `intent`, `variant` | Etiquetas con estilos solid/outline/subtle |
-| `Avatar` | `src`, `alt`, `fallback`, `size` | Imagen de perfil con fallback a iniciales |
-| `Separator` | `orientation` | Divider horizontal/vertical |
+| Componente | Descripción |
+|------------|-------------|
+| `Button` | 5 intents (primary, secondary, ghost, danger, link), 4 sizes, loading state, asChild |
+| `Badge` | Intents + variantes (subtle, solid, outline), compound variants |
+| `Avatar` | Imagen con fallback a iniciales, 4 tamaños |
+| `AvatarGroup` | Stack de avatares superpuestos con overflow counter |
+| `Separator` | Divider horizontal/vertical |
+| `Icon` | Wrapper sobre Lucide con 1400+ iconos tipados |
 
 ### Formularios
 
-| Componente | Props Clave | Descripción |
-|------------|-------------|-------------|
-| `Label` | `required` | Label accesible con indicador de requerido |
-| `Input` | `size`, `error` | Input con variantes de tamaño y estado error |
-| `Textarea` | `error` | Área de texto con estado error |
-| `Checkbox` | `indeterminate` | Checkbox con soporte indeterminate |
-| `Switch` | `checked`, `onCheckedChange`, `size` | Toggle interruptor |
+| Componente | Descripción |
+|------------|-------------|
+| `Label` | Accesible, indicador de requerido |
+| `Input` | Tamaños (sm/md/lg), estado error |
+| `Textarea` | Área de texto con error state |
+| `Checkbox` | Con soporte indeterminate |
+| `Switch` | Toggle con 3 tamaños |
+| `RadioGroup` + `RadioGroupItem` | Selector de opción única (Radix) |
+| `Select` | Dropdown estilizado completo (Trigger, Content, Item, Label, Separator) |
+| `Combobox` | Select con buscador integrado (cmdk + Popover) |
+| `Slider` | Selector numérico de arrastre (Radix) |
+| `InputOTP` | Campos separados para códigos de verificación |
+| `Dropzone` | Drag & drop de archivos con estados visuales |
+| `DatePicker` | Popover + Calendar |
+
+### Navegación
+
+| Componente | Descripción |
+|------------|-------------|
+| `Tabs` | TabsList + TabsTrigger + TabsContent (Radix) |
+| `Breadcrumbs` | Ruta con separador configurable |
+| `Pagination` | Numérica con ellipsis y prev/next |
+| `Stepper` | Flujo de pasos (active/completed/pending) |
+| `Command` (Palette) | Buscador global Cmd+K (cmdk) |
 
 ### Data Display
 
-| Componente | Props Clave | Descripción |
-|------------|-------------|-------------|
-| `Card` | — | Contenedor con Header, Title, Description, Content, Footer |
+| Componente | Descripción |
+|------------|-------------|
+| `Card` | Compuesto: Header, Title, Description, Content, Footer |
+| `DataTable` | TanStack Table con sorting, selection, pagination |
+| `Table` | Primitivas: Header, Body, Row, Head, Cell |
+| `Accordion` | Secciones expandibles (Radix) |
+| `ScrollArea` | Scrollbars estilizados (Radix) |
+| `Tree` | Navegación jerárquica recursiva |
+| `Calendar` | Panel del mes con selección de fecha |
+| `Progress` | Barra horizontal con valor y color configurable |
 
-### Feedback
+### Overlays / Feedback
 
-| Componente | Props Clave | Descripción |
-|------------|-------------|-------------|
-| `Spinner` | `size` | Indicador de carga circular animado |
-| `Skeleton` | — | Placeholder animado para estados de carga |
+| Componente | Descripción |
+|------------|-------------|
+| `Dialog` | Modal centrado con overlay (Radix) |
+| `Sheet` | Panel lateral deslizable, 4 posiciones |
+| `Popover` | Caja flotante posicionada (Radix) |
+| `Tooltip` | Texto explicativo al hover (Radix) |
+| `DropdownMenu` | Menú de acciones con submenús (Radix) |
+| `ContextMenu` | Menú de clic derecho (Radix) |
+| `Toaster` + `toast` | Notificaciones efímeras (Sonner) |
+| `Alert` | Callout estático con intents |
+| `Spinner` | Indicador circular con tamaños |
+| `Skeleton` | Placeholder animado de carga |
+
+### Especializados
+
+| Componente | Descripción |
+|------------|-------------|
+| `BarChart` | Wrapper Recharts con tokens semánticos |
+| `LineChart` | Múltiples líneas configurables |
+| `DonutChart` | Gráfico circular con paleta automática |
+| `ChatBubble` + `ChatTyping` | Interfaz conversacional (user/assistant/system) |
+| `CodeBlock` | Código con line numbers y botón copiar |
 
 ---
 
-## API de Variantes (Contrato Único)
+## API de Variantes
 
-Todos los componentes siguen la misma convención de props:
-
-```tsx
-// Intent: define el propósito semántico
-<Button intent="primary" />   // Acción principal
-<Button intent="danger" />    // Acción destructiva
-<Button intent="ghost" />     // Acción sutil
-<Button intent="secondary" /> // Acción secundaria
-<Button intent="link" />      // Enlace
-
-// Size: define la escala
-<Button size="sm" />  // Compacto
-<Button size="md" />  // Default
-<Button size="lg" />  // Prominente
-<Button size="icon" /> // Cuadrado para iconos
-```
-
-## Uso
+Las variantes visuales se comparten vía `@forge-ui/variants`:
 
 ```tsx
-import { Button, Card, CardHeader, CardTitle, CardContent, Input, Label } from '@forge-ui/react';
-
-function MyForm() {
-  return (
-    <Card>
-      <CardHeader>
-        <CardTitle>Crear usuario</CardTitle>
-      </CardHeader>
-      <CardContent className="space-y-4">
-        <div>
-          <Label htmlFor="email" required>Email</Label>
-          <Input id="email" type="email" placeholder="usuario@ejemplo.com" />
-        </div>
-        <Button intent="primary" loading={false}>
-          Guardar
-        </Button>
-      </CardContent>
-    </Card>
-  );
-}
+<Button intent="primary" size="lg" loading />
+<Badge intent="success" variant="outline">Activo</Badge>
+<Avatar size="xl" fallback="AG" />
+<Alert intent="danger">Error crítico</Alert>
 ```
 
 ## Utilidad `cn()`
 
-Exportada para uso externo. Combina clsx + tailwind-merge:
-
 ```tsx
 import { cn } from '@forge-ui/react';
-
-cn('px-4 py-2', condition && 'bg-primary-main', className);
+cn('px-4 py-2', isActive && 'bg-primary-50', className);
 ```
-
----
-
-## Componentes Pendientes (Roadmap)
-
-### Navegación
-- Breadcrumbs, Tabs, Pagination, Stepper, Command Palette
-
-### Overlays / Feedback
-- Dialog, Sheet/Drawer, Popover, Tooltip, DropdownMenu, ContextMenu, Toast, Alert
-
-### Data Display
-- Table, DataTable (TanStack), Accordion, ScrollArea, Tree, Calendar, DatePicker
-
-### Especializados
-- Chart Wrappers (Recharts), ChatBubble, PromptInput, CodeBlock
 
 ---
 
 ## Build
 
 ```bash
-# Desde la raíz del monorepo
-npm run build:react
-
-# Pipeline completo
-npm run build:all
+npm run build:react      # Solo este paquete
+npm run build:all        # Pipeline completo (tokens → css → tailwind → variants → react)
 ```
 
-Genera: `dist/index.js` (CJS) + `dist/index.mjs` (ESM) + `dist/index.d.ts` (Types)
+Output: `dist/index.js` (CJS) + `dist/index.mjs` (ESM) + `dist/*.d.ts` (Types)

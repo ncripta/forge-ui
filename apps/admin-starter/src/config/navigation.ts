@@ -25,7 +25,6 @@ export const navigationMenu: NavGroup[] = [
     group: 'Sistema',
     items: [
       { title: 'Configuración', icon: 'Settings', path: '/settings' },
-      { title: 'Seguridad', icon: 'ShieldCheck', path: '/security' },
     ],
   },
 ];
