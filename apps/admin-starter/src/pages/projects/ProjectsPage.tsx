@@ -1,65 +1,16 @@
 import { useState } from 'react';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
+import { ProjectService, type ProjectRecord, type ProjectFilters } from '@/services/project.service';
 import {
   Button, Badge, Icon, Input, Card, CardContent,
   Tabs, TabsList, TabsTrigger,
-  AvatarGroup, Progress, Label, Textarea,
+  AvatarGroup, Progress, Label, Textarea, Spinner,
   Dialog, DialogTrigger, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter, DialogClose,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
   toast,
   type IconName,
 } from '@forge-ui/react';
-
-interface Project {
-  id: string;
-  name: string;
-  description: string;
-  icon: IconName;
-  iconBg: string;
-  status: 'active' | 'review' | 'completed' | 'archived';
-  progress: number;
-  progressColor?: string;
-  members: { fallback: string }[];
-  updatedAt: string;
-}
-
-const INITIAL_PROJECTS: Project[] = [
-  {
-    id: '1',
-    name: 'E-commerce Portal',
-    description: 'Rediseño completo de la tienda online principal integrando el nuevo sistema de pagos de Stripe.',
-    icon: 'ShoppingCart',
-    iconBg: 'bg-blue-50 text-blue-600',
-    status: 'active',
-    progress: 75,
-    members: [{ fallback: 'MR' }, { fallback: 'DL' }, { fallback: 'AG' }, { fallback: 'SP' }],
-    updatedAt: 'Actualizado hoy',
-  },
-  {
-    id: '2',
-    name: 'Valhalla Agents IA',
-    description: 'Desarrollo de la interfaz conversacional para los agentes autónomos de soporte al cliente.',
-    icon: 'Bot',
-    iconBg: 'bg-purple-50 text-purple-600',
-    status: 'review',
-    progress: 92,
-    progressColor: '#a855f7',
-    members: [{ fallback: 'AG' }],
-    updatedAt: 'Hace 2 días',
-  },
-  {
-    id: '3',
-    name: 'Panel Analítico Q3',
-    description: 'Migración de métricas legacy al nuevo sistema de visualización de datos de Forge UI.',
-    icon: 'BarChart2',
-    iconBg: 'bg-rose-50 text-rose-600',
-    status: 'completed',
-    progress: 100,
-    progressColor: '#10b981',
-    members: [{ fallback: 'CJ' }, { fallback: 'SP' }],
-    updatedAt: 'Finalizado',
-  },
-];
 
 const statusConfig = {
   active: { label: 'En progreso', intent: 'success' as const },
@@ -68,7 +19,7 @@ const statusConfig = {
   archived: { label: 'Archivado', intent: 'default' as const },
 };
 
-const ICON_OPTIONS: { value: IconName; label: string; bg: string }[] = [
+const ICON_OPTIONS: { value: string; label: string; bg: string }[] = [
   { value: 'ShoppingCart', label: 'E-commerce', bg: 'bg-blue-50 text-blue-600' },
   { value: 'Bot', label: 'IA / Agentes', bg: 'bg-purple-50 text-purple-600' },
   { value: 'BarChart2', label: 'Analítica', bg: 'bg-rose-50 text-rose-600' },
@@ -79,7 +30,7 @@ const ICON_OPTIONS: { value: IconName; label: string; bg: string }[] = [
 
 // --- Project Card ---
 
-function ProjectCard({ project }: { project: Project }) {
+function ProjectCard({ project, onDelete }: { project: ProjectRecord; onDelete: (id: string) => void }) {
   const status = statusConfig[project.status];
 
   return (
@@ -87,7 +38,7 @@ function ProjectCard({ project }: { project: Project }) {
       <CardContent className="p-0 flex flex-col h-full">
         <div className="flex justify-between items-start mb-4">
           <div className={`w-12 h-12 rounded-lg flex items-center justify-center ${project.iconBg}`}>
-            <Icon name={project.icon} size={24} />
+            <Icon name={project.icon as IconName} size={24} />
           </div>
           <DropdownMenu>
             <DropdownMenuTrigger asChild>
@@ -99,7 +50,9 @@ function ProjectCard({ project }: { project: Project }) {
               <DropdownMenuItem>Editar</DropdownMenuItem>
               <DropdownMenuItem>Duplicar</DropdownMenuItem>
               <DropdownMenuSeparator />
-              <DropdownMenuItem>Archivar</DropdownMenuItem>
+              <DropdownMenuItem onClick={() => onDelete(project.id)} className="text-danger-main">
+                Eliminar
+              </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>
         </div>
@@ -136,37 +89,32 @@ function ProjectCard({ project }: { project: Project }) {
 
 // --- New Project Dialog ---
 
-function NewProjectDialog({ onCreated }: { onCreated: (project: Project) => void }) {
+function NewProjectDialog() {
+  const queryClient = useQueryClient();
   const [open, setOpen] = useState(false);
-  const [loading, setLoading] = useState(false);
   const [iconIdx, setIconIdx] = useState('0');
 
-  const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    setLoading(true);
+  const createMutation = useMutation({
+    mutationFn: (data: Pick<ProjectRecord, 'name' | 'description' | 'icon' | 'iconBg'>) =>
+      ProjectService.create(data),
+    onSuccess: (project) => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      toast.success(`Proyecto "${project.name}" creado correctamente`);
+      setOpen(false);
+    },
+  });
 
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     const form = new FormData(e.currentTarget);
     const selectedIcon = ICON_OPTIONS[Number(iconIdx)]!;
 
-    // Simular latencia
-    await new Promise((r) => setTimeout(r, 500));
-
-    const newProject: Project = {
-      id: String(Date.now()),
+    createMutation.mutate({
       name: form.get('name') as string,
       description: form.get('description') as string,
       icon: selectedIcon.value,
       iconBg: selectedIcon.bg,
-      status: 'active',
-      progress: 0,
-      members: [{ fallback: 'TU' }],
-      updatedAt: 'Justo ahora',
-    };
-
-    onCreated(newProject);
-    setLoading(false);
-    setOpen(false);
-    toast.success(`Proyecto "${newProject.name}" creado correctamente`);
+    });
   };
 
   return (
@@ -208,7 +156,7 @@ function NewProjectDialog({ onCreated }: { onCreated: (project: Project) => void
             <DialogClose asChild>
               <Button type="button" intent="secondary">Cancelar</Button>
             </DialogClose>
-            <Button type="submit" intent="primary" loading={loading}>Crear proyecto</Button>
+            <Button type="submit" intent="primary" loading={createMutation.isPending}>Crear proyecto</Button>
           </DialogFooter>
         </form>
       </DialogContent>
@@ -216,7 +164,7 @@ function NewProjectDialog({ onCreated }: { onCreated: (project: Project) => void
   );
 }
 
-// --- New Project Card (placeholder visual) ---
+// --- New Project Card ---
 
 function NewProjectCard({ onClick }: { onClick: () => void }) {
   return (
@@ -238,23 +186,27 @@ function NewProjectCard({ onClick }: { onClick: () => void }) {
 // --- Page ---
 
 export function ProjectsPage() {
-  const [projects, setProjects] = useState<Project[]>(INITIAL_PROJECTS);
+  const queryClient = useQueryClient();
   const [search, setSearch] = useState('');
   const [tab, setTab] = useState('all');
-  const [dialogOpen, setDialogOpen] = useState(false);
 
-  const handleCreated = (project: Project) => {
-    setProjects((prev) => [project, ...prev]);
+  const filters: ProjectFilters = {
+    ...(search && { search }),
+    ...(tab !== 'all' && { status: tab === 'active' ? 'active' : tab }),
   };
 
-  const filtered = projects.filter((p) => {
-    if (tab === 'active') return p.status === 'active' || p.status === 'review';
-    if (tab === 'completed') return p.status === 'completed';
-    if (tab === 'archived') return p.status === 'archived';
-    return true;
-  }).filter((p) =>
-    !search || p.name.toLowerCase().includes(search.toLowerCase())
-  );
+  const { data, isLoading } = useQuery({
+    queryKey: ['projects', filters],
+    queryFn: () => ProjectService.getAll(filters),
+  });
+
+  const deleteMutation = useMutation({
+    mutationFn: ProjectService.delete,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ['projects'] });
+      toast.success('Proyecto eliminado');
+    },
+  });
 
   return (
     <div className="max-w-7xl mx-auto space-y-6">
@@ -269,7 +221,7 @@ export function ProjectsPage() {
             <Icon name="Filter" size={16} />
             Filtros
           </Button>
-          <NewProjectDialog onCreated={handleCreated} />
+          <NewProjectDialog />
         </div>
       </div>
 
@@ -293,12 +245,18 @@ export function ProjectsPage() {
       </div>
 
       {/* Projects Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-        {filtered.map((project) => (
-          <ProjectCard key={project.id} project={project} />
-        ))}
-        <NewProjectCard onClick={() => setDialogOpen(true)} />
-      </div>
+      {isLoading ? (
+        <div className="flex items-center justify-center py-16">
+          <Spinner size="lg" />
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          {data?.data.map((project) => (
+            <ProjectCard key={project.id} project={project} onDelete={(id) => deleteMutation.mutate(id)} />
+          ))}
+          <NewProjectCard onClick={() => {}} />
+        </div>
+      )}
     </div>
   );
 }
