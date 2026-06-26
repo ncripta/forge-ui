@@ -1,6 +1,6 @@
 {
   "name": "@forge-ui/variants",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Shared CVA variant definitions for Forge UI component libraries",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
