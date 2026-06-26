@@ -30,9 +30,16 @@ export { Select, SelectTrigger, SelectContent, SelectItem, SelectGroup, SelectSe
 // Data Display
 export { Card, CardHeader, CardTitle, CardContent, CardFooter } from './components/Card';
 export { Progress } from './components/Progress';
+export { DataTable, FlexRender } from './components/DataTable';
+export type { ColumnDef, SortingState, RowSelectionState } from './components/DataTable';
+export { Accordion, AccordionItem, AccordionTrigger, AccordionContent } from './components/Accordion';
+export { ScrollArea } from './components/ScrollArea';
+export { AvatarGroup } from './components/AvatarGroup';
 
 // Navigation
 export { Tabs, TabsList, TabsTrigger, TabsContent } from './components/Tabs';
+export { Pagination } from './components/Pagination';
+export { Breadcrumbs } from './components/Breadcrumbs';
 
 // Overlays
 export { Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose } from './components/Dialog';
