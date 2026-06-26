@@ -3,7 +3,7 @@ import { navigationMenu, type NavItem } from '@/config/navigation';
 import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
-import { Badge, ScrollArea, Icon, type IconName } from '@forge-ui/react';
+import { Badge, Icon, type IconName } from '@forge-ui/react';
 import { cn } from '@forge-ui/react';
 
 function NavItemLink({ item }: { item: NavItem }) {
@@ -12,7 +12,7 @@ function NavItemLink({ item }: { item: NavItem }) {
       to={item.path}
       className={({ isActive }) =>
         cn(
-          'flex items-center gap-3 px-3 py-2.5 rounded-lg text-base font-medium transition-colors duration-fast',
+          'flex items-center gap-3 px-3 py-3 rounded-lg text-[15px] font-medium transition-colors',
           isActive
             ? 'bg-primary-50 text-primary-700'
             : 'text-surface-600 hover:bg-surface-100 hover:text-surface-900'
@@ -21,8 +21,8 @@ function NavItemLink({ item }: { item: NavItem }) {
     >
       {({ isActive }) => (
         <>
-          <Icon name={item.icon as IconName} size={18} className={isActive ? 'text-primary-600' : 'text-surface-400'} />
-          <span className="truncate">{item.title}</span>
+          <Icon name={item.icon as IconName} size={22} className={isActive ? 'text-primary-600' : 'text-surface-400'} />
+          <span>{item.title}</span>
           {item.badge && <Badge intent="primary" className="ml-auto text-[10px]">{item.badge}</Badge>}
         </>
       )}
@@ -71,8 +71,8 @@ export function Sidebar() {
         </div>
 
         {/* Navigation */}
-        <ScrollArea className="flex-1 py-6 px-4">
-          <nav className="space-y-1">
+        <nav className="flex-1 overflow-y-auto py-6 px-4">
+          <div className="space-y-1">
             {filteredMenu.map((group) => (
               <div key={group.group}>
                 <p className="px-3 text-xs font-semibold text-surface-400 uppercase tracking-wider mb-3 mt-6 first:mt-0">
@@ -85,8 +85,8 @@ export function Sidebar() {
                 </div>
               </div>
             ))}
-          </nav>
-        </ScrollArea>
+          </div>
+        </nav>
 
         {/* User Profile (Bottom) */}
         <div className="p-4 border-t border-surface-100">
