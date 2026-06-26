@@ -7,6 +7,7 @@ import { LoginPage } from '@/pages/Login';
 import { UsersPage } from '@/pages/users/UsersPage';
 import { SettingsPage } from '@/pages/settings/SettingsPage';
 import { AnalyticsPage } from '@/pages/Analytics';
+import { ProjectsPage } from '@/pages/projects/ProjectsPage';
 
 export function AppRouter() {
   return (
@@ -24,6 +25,7 @@ export function AppRouter() {
           <Route path="/dashboard" element={<DashboardPage />} />
           <Route path="/analytics" element={<AnalyticsPage />} />
           <Route path="/users" element={<UsersPage />} />
+          <Route path="/projects" element={<ProjectsPage />} />
           <Route path="/settings" element={<SettingsPage />} />
         </Route>
       </Route>

@@ -200,3 +200,6 @@ export { CodeBlock, type CodeBlockProps } from './components/CodeBlock';
 
 // Icon
 export { Icon, icons, type IconProps, type IconName } from './components/Icon';
+
+// Progress
+export { Progress, type ProgressProps } from './components/Progress';
