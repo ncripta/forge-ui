@@ -2,7 +2,8 @@
 import { ref } from 'vue';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
 import { ProjectService, type ProjectRecord } from '@/services/project.service';
-import { Card, CardContent, Icon, Badge, Button, Progress, Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose, Input, Label, Textarea, Spinner, toast } from '@forge-ui/vue';
+import { Card, CardContent, Icon, Badge, Button, Progress, Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose, Input, Label, Textarea, Spinner } from '@forge-ui/vue';
+import { toast } from 'vue-sonner';
 
 const queryClient = useQueryClient();
 const dialogOpen = ref(false);
