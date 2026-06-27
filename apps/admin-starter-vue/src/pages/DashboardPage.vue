@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card, CardHeader, CardTitle, CardContent, Button, Badge, Avatar, Icon, LineChart } from '@forge-ui/vue';
+import { Card, CardHeader, CardTitle, CardContent, Badge, Avatar, Icon, LineChart } from '@forge-ui/vue';
 
 const kpis = [
   { label: 'Ingresos MRR', value: '$45,231.89', change: '+20.1%', icon: 'CreditCard', iconBg: 'bg-primary-50 text-primary-600' },
@@ -29,12 +29,9 @@ const recentUsers = [
 <template>
   <div class="max-w-7xl mx-auto space-y-8">
     <!-- Header -->
-    <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-      <div>
-        <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Resumen de Plataforma</h1>
-        <p class="text-sm text-surface-500 mt-1">Aquí tienes lo que está sucediendo hoy.</p>
-      </div>
-      <Button intent="primary"><Icon name="Plus" :size="16" /> Nuevo Proyecto</Button>
+    <div>
+      <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Resumen de Plataforma</h1>
+      <p class="text-sm text-surface-500 mt-1">Aquí tienes lo que está sucediendo hoy.</p>
     </div>
 
     <!-- KPIs -->
