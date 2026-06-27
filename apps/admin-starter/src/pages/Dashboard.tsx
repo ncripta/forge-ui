@@ -1,7 +1,8 @@
 import {
   Card, CardHeader, CardTitle, CardContent,
-  Button, Badge, Avatar, Icon, LineChart,
+  Badge, Avatar, Icon, LineChart,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
+  Button,
   type IconName,
 } from '@forge-ui/react';
 
@@ -39,15 +40,9 @@ export function DashboardPage() {
   return (
     <div className="max-w-7xl mx-auto space-y-8">
       {/* Page Header */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
-        <div>
-          <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Resumen de Plataforma</h1>
-          <p className="text-sm text-surface-500 mt-1">Aquí tienes lo que está sucediendo hoy.</p>
-        </div>
-        <Button intent="primary">
-          <Icon name="Plus" size={16} />
-          Nuevo Proyecto
-        </Button>
+      <div>
+        <h1 className="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Resumen de Plataforma</h1>
+        <p className="text-sm text-surface-500 mt-1">Aquí tienes lo que está sucediendo hoy.</p>
       </div>
 
       {/* KPIs */}
