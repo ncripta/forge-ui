@@ -1,5 +1,25 @@
 # @forge-ui/css
 
+## 0.4.0
+
+### Minor Changes
+
+- v0.4.0 - Migrate to @ncripta scope, open source licensing and npm publish configuration.
+
+  - All packages renamed from @forge-ui/_ to @ncripta/forge-_ scope
+  - License changed to MIT for all packages (open source)
+  - Added publishConfig with public access for npm publishing
+  - Added repository metadata to all package.json files
+  - Dual-license structure: MIT for packages/, commercial for apps/
+  - README rewritten for developer audience (open core model)
+  - Badge padding improved for better readability
+  - Removed deprecated baseUrl from tsconfig
+
+### Patch Changes
+
+- Updated dependencies
+  - @ncripta/forge-tokens@0.4.0
+
 ## 0.3.0
 
 ### Minor Changes

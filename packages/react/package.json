@@ -1,6 +1,6 @@
 {
   "name": "@ncripta/forge-react",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "React component library for Forge UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
@@ -60,5 +60,12 @@
     "url": "https://github.com/ncripta/forge-ui",
     "directory": "packages/react"
   },
-  "keywords": ["react", "components", "ui", "design-system", "tailwind", "forge-ui"]
+  "keywords": [
+    "react",
+    "components",
+    "ui",
+    "design-system",
+    "tailwind",
+    "forge-ui"
+  ]
 }

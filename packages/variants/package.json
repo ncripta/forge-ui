@@ -1,6 +1,6 @@
 {
   "name": "@ncripta/forge-variants",
-  "version": "0.3.0",
+  "version": "0.4.0",
   "description": "Shared CVA variant definitions for Forge UI component libraries",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
