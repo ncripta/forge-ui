@@ -1,101 +1,95 @@
 # Forge UI
 
-Sistema de diseño modular y toolkit de componentes UI moderno, accesible y altamente personalizable. Construido con React, Vue, Tailwind CSS y Radix UI.
+English | [Español](./README.es.md)
 
-Forge UI está diseñado como un ecosistema escalable: desde la definición agnóstica de *Design Tokens* hasta librerías de componentes robustas, pensadas para construir paneles administrativos y aplicaciones web de alto rendimiento.
+A modular design system and modern UI component toolkit — accessible and highly customizable. Built with React, Vue, Tailwind CSS and Radix UI.
+
+Forge UI is designed as a scalable ecosystem: from framework-agnostic Design Tokens to robust component libraries, built for creating admin panels and high-performance web applications.
 
 ---
 
-## 🏗️ Arquitectura del Monorepo
+## 🏗️ Monorepo Architecture
 
-El proyecto utiliza NPM Workspaces para gestionar múltiples paquetes bajo el scope oficial de la organización `@ncripta`.
+The project uses NPM Workspaces to manage multiple packages under the `@ncripta` organization scope.
 
 ```text
 forge-ui/
 ├── packages/
 │   ├── tokens/        → @ncripta/forge-tokens      (Design Tokens - JSON SSOT)
-│   ├── css/           → @ncripta/forge-css          (Generador automático de CSS Variables)
-│   ├── tailwind/      → @ncripta/forge-tailwind     (Preset de Tailwind CSS)
-│   ├── variants/      → @ncripta/forge-variants     (Variantes CVA compartidas)
-│   ├── react/         → @ncripta/forge-react        (Librería de componentes React)
-│   └── vue/           → @ncripta/forge-vue          (Librería de componentes Vue 3)
+│   ├── css/           → @ncripta/forge-css          (CSS Variables auto-generator)
+│   ├── tailwind/      → @ncripta/forge-tailwind     (Tailwind CSS Preset)
+│   ├── variants/      → @ncripta/forge-variants     (Shared CVA variant definitions)
+│   ├── react/         → @ncripta/forge-react        (React component library)
+│   └── vue/           → @ncripta/forge-vue          (Vue 3 component library)
 └── apps/
-    ├── admin-starter/     → Starter Kit React       (Implementación de referencia)
-    └── admin-starter-vue/ → Starter Kit Vue         (Implementación de referencia)
+    ├── admin-starter/     → React Starter Kit       (Reference implementation)
+    └── admin-starter-vue/ → Vue Starter Kit         (Reference implementation)
 ```
 
-## 🔄 Flujo de Dependencias
+## 🔄 Dependency Flow
 
-La arquitectura sigue un flujo estricto y unidireccional para garantizar el desacoplamiento:
+The architecture follows a strict unidirectional flow to ensure decoupling:
 
 `tokens` → `css` → `tailwind` → `variants` → `react` / `vue` → `apps`
 
 ## 🚀 Quick Start
 
 ```bash
-# 1. Clonar el repositorio
 git clone https://github.com/ncripta/forge-ui.git
 cd forge-ui
-
-# 2. Instalar dependencias en todo el monorepo
 npm install
-
-# 3. Compilar el pipeline completo del sistema de diseño
 npm run build:all
-
-# 4. Levantar el servidor de desarrollo del Starter Kit
 cd apps/admin-starter
 npm run dev
 ```
 
-## 🎨 Sistema de Temas
+## 🎨 Theming System
 
-Forge UI soporta múltiples temas y modos de color listos para usarse de forma nativa mediante atributos de datos en el HTML. Son dos dimensiones independientes y combinables:
+Two independent and combinable dimensions:
 
 - **Color theme** (`data-theme`): `default` (indigo), `emerald`, `rose`, `ocean`.
-- **Modo** (`data-mode`): `light`, `dark`.
+- **Mode** (`data-mode`): `light`, `dark`.
 
 ```html
-<!-- Ejemplo: Modo oscuro con el tema Ocean -->
 <html data-mode="dark" data-theme="ocean">
 ```
 
-## 🛠️ Tecnologías Core
+## 🛠️ Core Technologies
 
-- **TypeScript:** Strict mode obligatorio en todo el monorepo.
-- **Tailwind CSS:** Motor de utilidades (v3.4+).
-- **Radix UI:** Primitivas *headless* para accesibilidad impecable (WAI-ARIA).
-- **CVA (Class Variance Authority):** Gestión tipada de variantes de componentes.
-- **Vite & Tsup:** Bundlers ultra rápidos para aplicaciones y librerías respectivamente.
-- **Lucide Icons:** Iconografía limpia y coherente.
-- **Changesets + Husky:** Versionamiento semántico y control estricto de commits.
+- **TypeScript:** Strict mode across the entire monorepo.
+- **Tailwind CSS:** Utility engine (v3.4+).
+- **Radix UI:** Headless primitives for flawless accessibility (WAI-ARIA).
+- **CVA (Class Variance Authority):** Typed component variant management.
+- **Vite & Tsup:** Ultra-fast bundlers for apps and libraries.
+- **Lucide Icons:** Clean, consistent iconography.
+- **Changesets + Husky:** Semantic versioning and strict commit control.
 
-## 📦 Comandos Disponibles
+## 📦 Available Commands
 
-Ejecutables desde la raíz del monorepo:
+Run from the monorepo root:
 
-| Comando | Acción |
+| Command | Action |
 |---------|--------|
-| `npm run build:tokens` | Compila tipos de tokens (tsc) |
-| `npm run build:css` | Genera las CSS variables globales desde el JSON de tokens |
-| `npm run build:tailwind` | Compila el preset de Tailwind (tsc) |
-| `npm run build:variants` | Compila las variantes compartidas (tsup + tsc) |
-| `npm run build:react` | Compila la librería de componentes React (tsup + tsc) |
-| `npm run build:vue` | Compila la librería de componentes Vue (tsup + vue-tsc) |
-| `npm run build:core` | Pipeline base: `tokens` → `css` → `tailwind` → `variants` |
-| `npm run build:all` | Pipeline completo incluyendo `react` y `vue` |
+| `npm run build:tokens` | Compile token types (tsc) |
+| `npm run build:css` | Generate CSS variables from token JSON |
+| `npm run build:tailwind` | Compile Tailwind preset (tsc) |
+| `npm run build:variants` | Compile shared variants (tsup + tsc) |
+| `npm run build:react` | Bundle React component library (tsup + tsc) |
+| `npm run build:vue` | Bundle Vue component library (tsup + vue-tsc) |
+| `npm run build:core` | Core pipeline: tokens → css → tailwind → variants |
+| `npm run build:all` | Full pipeline including react and vue |
 
-### Versionamiento
+### Versioning
 
-Usamos [Changesets](https://github.com/changesets/changesets) y Conventional Commits para automatizar el versionado semántico:
+We use [Changesets](https://github.com/changesets/changesets) and Conventional Commits for automated semantic versioning:
 
 ```bash
-npx changeset            # 1. Declarar qué paquetes cambiaron
-npx changeset version    # 2. Actualizar versiones y generar CHANGELOGs
-npx changeset publish    # 3. Publicar paquetes a npm
+npx changeset            # 1. Declare which packages changed
+npx changeset version    # 2. Bump versions and generate CHANGELOGs
+npx changeset publish    # 3. Publish packages to npm
 ```
 
-## 📄 Licencia y Uso
+## 📄 License
 
-- **Core & Paquetes (`packages/`):** Todo el código fuente de los paquetes publicados bajo el scope `@ncripta` es de uso libre bajo licencia MIT. Ver `packages/LICENSE`.
-- **Aplicaciones (`apps/`):** Las aplicaciones y starter kits incluidos en este repositorio son demos funcionales. Consulta `apps/LICENSE` respecto a las restricciones de uso en entornos de producción comerciales.
+- **Packages (`packages/`):** MIT — free to use. See `packages/LICENSE`.
+- **Applications (`apps/`):** Commercial license. See `apps/LICENSE` for production use restrictions.

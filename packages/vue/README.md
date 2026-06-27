@@ -1,114 +1,76 @@
-# @forge-ui/vue
+# @ncripta/forge-vue
 
-Librería de componentes Vue 3 para Forge UI. Componentes presentacionales, accesibles y tematizados, construidos sobre los Design Tokens compartidos del sistema.
+Vue 3 component library for Forge UI. 40+ presentational, accessible and themed components sharing the same Design Token system and API contract as the React counterpart.
 
----
+## Stack
 
-## Stack Técnico
+Radix Vue (headless a11y) • CVA via `@ncripta/forge-variants` • tailwind-merge • @lucide/vue • vue-chartjs • vue-sonner • TanStack Vue Table • tsup + vue-tsc
 
-| Herramienta | Rol |
-|-------------|-----|
-| Radix Vue | Motor headless (accesibilidad, WAI-ARIA) |
-| CVA (vía `@forge-ui/variants`) | Variantes compartidas con React |
-| tailwind-merge + clsx | Fusión de clases |
-| @lucide/vue | Iconografía (1400+ iconos SVG) |
-| tsup + unplugin-vue | Bundler (CJS + ESM) |
-| vue-tsc | Type checking + declarations |
-
-## Instalación
+## Installation
 
 ```bash
-npm install @forge-ui/vue @forge-ui/css @forge-ui/tailwind
+npm install @ncripta/forge-vue @ncripta/forge-css @ncripta/forge-tailwind
 ```
 
-## Configuración
+## Setup
 
 ```css
-/* main.css */
-@import '@forge-ui/css/dist/theme-base.css';
-@import '@forge-ui/css/dist/theme-dark.css';
-@import '@forge-ui/css/dist/color-themes.css';
+@import '@ncripta/forge-css/dist/theme-base.css';
+@import '@ncripta/forge-css/dist/theme-dark.css';
+@import '@ncripta/forge-css/dist/color-themes.css';
 ```
 
 ```javascript
 // tailwind.config.js
 module.exports = {
-  presets: [require('@forge-ui/tailwind')],
+  presets: [require('@ncripta/forge-tailwind')],
   content: [
     './src/**/*.{vue,ts}',
-    './node_modules/@forge-ui/vue/dist/**/*.{js,mjs}',
-    './node_modules/@forge-ui/variants/dist/**/*.{js,mjs}',
+    './node_modules/@ncripta/forge-vue/dist/**/*.{js,mjs}',
+    './node_modules/@ncripta/forge-variants/dist/**/*.{js,mjs}',
   ],
 }
 ```
 
----
+## Components (40+)
 
-## Componentes Disponibles
+| Category | Components |
+|----------|-----------|
+| Atomic | Button, Badge, Avatar, AvatarGroup, Separator, Icon |
+| Forms | Label, Input, Textarea, Checkbox, Switch, RadioGroup, Select, Combobox, Slider, InputOTP, Dropzone, DatePicker |
+| Navigation | Tabs, Breadcrumbs, Pagination, Stepper, Command |
+| Data Display | Card, DataTable, Accordion, ScrollArea, Tree, Calendar, Progress |
+| Overlays | Dialog, Sheet, Popover, Tooltip, DropdownMenu, ContextMenu |
+| Feedback | Spinner, Skeleton, Toaster/toast, Alert |
+| Specialized | BarChart, LineChart, DonutChart, ChatBubble, CodeBlock |
 
-| Componente | Props Clave | Descripción |
-|------------|-------------|-------------|
-| `Button` | `intent`, `size`, `loading` | Botón con 5 intents y 4 tamaños |
-| `Badge` | `intent`, `variant` | Etiquetas solid/outline/subtle |
-| `Avatar` | `src`, `fallback`, `size` | Imagen con fallback a iniciales |
-| `Input` | `size`, `error`, `v-model` | Input con two-way binding |
-| `Label` | `required` | Label accesible |
-| `Card` | — | Compuesto: Header, Title, Content, Footer |
-| `Separator` | `orientation` | Divider horizontal/vertical |
-| `Spinner` | `size` | Indicador de carga |
-| `Skeleton` | — | Placeholder animado |
-| `Icon` | `name`, `size`, `strokeWidth` | Wrapper sobre @lucide/vue |
-
----
-
-## Contrato de API Único
-
-Las props son **idénticas** a `@forge-ui/react`:
-
-```vue
-<!-- Vue -->
-<Button intent="danger" size="lg" :loading="true">Eliminar</Button>
-<Badge intent="success" variant="outline">Activo</Badge>
-<Avatar size="xl" fallback="AG" />
-```
-
-```tsx
-// React (idéntico)
-<Button intent="danger" size="lg" loading>Eliminar</Button>
-<Badge intent="success" variant="outline">Activo</Badge>
-<Avatar size="xl" fallback="AG" />
-```
-
-## Uso
+## Usage
 
 ```vue
 <script setup>
-import { Button, Card, CardHeader, CardTitle, CardContent, Input, Label } from '@forge-ui/vue';
+import { Button, Card, CardContent, Input, Label } from '@ncripta/forge-vue';
 </script>
 
 <template>
   <Card>
-    <CardHeader>
-      <CardTitle>Crear usuario</CardTitle>
-    </CardHeader>
     <CardContent class="space-y-4">
-      <div>
-        <Label required>Email</Label>
-        <Input type="email" placeholder="usuario@ejemplo.com" />
-      </div>
-      <Button intent="primary">Guardar</Button>
+      <Label required>Email</Label>
+      <Input type="email" placeholder="user@example.com" />
+      <Button intent="primary">Save</Button>
     </CardContent>
   </Card>
 </template>
 ```
 
----
+## Unified API Contract
 
-## Build
+Props are identical to `@ncripta/forge-react`:
 
-```bash
-npm run build:vue      # Solo este paquete
-npm run build:all      # Pipeline completo
+```vue
+<Button intent="danger" size="lg" :loading="true" />
+<Badge intent="success" variant="outline">Active</Badge>
 ```
 
-Output: `dist/index.js` (CJS) + `dist/index.mjs` (ESM) + types via vue-tsc
+## License
+
+MIT

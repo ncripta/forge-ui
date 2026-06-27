@@ -1,25 +1,23 @@
-# @forge-ui/variants
+# @ncripta/forge-variants
 
-Definiciones compartidas de variantes CVA (Class Variance Authority) para todas las implementaciones de componentes de Forge UI.
+Shared CVA (Class Variance Authority) variant definitions for all Forge UI component libraries.
 
----
+## Purpose
 
-## Propósito
-
-Este paquete es el **puente entre los tokens de diseño y los componentes de cualquier framework**. Contiene las strings de clases Tailwind organizadas por variantes, sin ningún código de renderizado.
+This package bridges design tokens and components across any framework. It contains Tailwind class strings organized by variants, with zero rendering code.
 
 ```
-@forge-ui/tokens → @forge-ui/css → @forge-ui/tailwind
-                                           ↓
-                                  @forge-ui/variants  ← ESTE PAQUETE
-                                     ↙         ↘
-                            @forge-ui/react   @forge-ui/vue (futuro)
+@ncripta/forge-tokens → forge-css → forge-tailwind
+                                          ↓
+                                 forge-variants  ← THIS PACKAGE
+                                    ↙        ↘
+                           forge-react      forge-vue
 ```
 
-## Variantes Disponibles
+## Available Variants
 
-| Export | Componente | Variantes |
-|--------|-----------|-----------|
+| Export | Component | Variants |
+|--------|-----------|----------|
 | `buttonVariants` | Button | intent (primary, secondary, ghost, danger, link), size (sm, md, lg, icon) |
 | `badgeVariants` | Badge | intent (default, primary, success, danger, warning), variant (subtle, solid, outline) |
 | `avatarVariants` | Avatar | size (sm, md, lg, xl) |
@@ -29,23 +27,22 @@ Este paquete es el **puente entre los tokens de diseño y los componentes de cua
 | `sheetContentVariants` | Sheet | side (top, bottom, left, right) |
 | `chatBubbleVariants` | ChatBubble | role (user, assistant, system) |
 
-## Uso en un Framework
+## Usage
 
 ```typescript
-// React
-import { buttonVariants } from '@forge-ui/variants';
-import { cn } from './utils/cn';
+import { buttonVariants } from '@ncripta/forge-variants';
 
-const Button = ({ intent, size, className, ...props }) => (
-  <button className={cn(buttonVariants({ intent, size, className }))} {...props} />
-);
+// React
+<button className={buttonVariants({ intent: 'primary', size: 'lg' })} />
 
 // Vue
-import { buttonVariants } from '@forge-ui/variants';
-
-const classes = computed(() => buttonVariants({ intent: props.intent, size: props.size }));
+const classes = computed(() => buttonVariants({ intent: props.intent }));
 ```
 
-## Regla
+## Rule
 
-Si necesitas añadir una variante visual a un componente, se define **aquí** — nunca directamente en `@forge-ui/react` o `@forge-ui/vue`. Esto garantiza que cambiar un estilo se propague a todos los frameworks simultáneamente.
+Visual variants are defined here — never in framework-specific packages. This ensures a single change propagates to all frameworks simultaneously.
+
+## License
+
+MIT
