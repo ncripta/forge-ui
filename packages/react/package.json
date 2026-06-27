@@ -1,6 +1,6 @@
 {
   "name": "@forge-ui/react",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "React component library for Forge UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

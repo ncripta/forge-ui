@@ -1,6 +1,6 @@
 {
   "name": "@forge-ui/tokens",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Design tokens - Single Source of Truth for Forge UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
