@@ -1,19 +1,48 @@
 <script setup lang="ts">
 import { ref } from 'vue';
-import { useQuery } from '@tanstack/vue-query';
-import { UserService } from '@/services/user.service';
-import { Button, Input, Badge, Avatar, Icon, Spinner } from '@forge-ui/vue';
+import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
+import { UserService, type UserRecord } from '@/services/user.service';
+import { Button, Input, Label, Badge, Avatar, Icon, Spinner, Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose, toast } from '@forge-ui/vue';
 
+const queryClient = useQueryClient();
 const search = ref('');
 const filters = ref<Record<string, string | number>>({ page: 1 });
+const dialogOpen = ref(false);
 
 const { data, isLoading } = useQuery({
   queryKey: ['users', filters],
   queryFn: () => UserService.getAll(filters.value),
 });
 
+const createMutation = useMutation({
+  mutationFn: (payload: Partial<UserRecord>) => UserService.create(payload),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+    toast.success('Usuario creado correctamente');
+    dialogOpen.value = false;
+  },
+});
+
+const deleteMutation = useMutation({
+  mutationFn: (id: string) => UserService.delete(id),
+  onSuccess: () => {
+    queryClient.invalidateQueries({ queryKey: ['users'] });
+    toast.success('Usuario eliminado');
+  },
+});
+
 const handleSearch = () => {
   filters.value = { ...filters.value, page: 1, search: search.value };
+};
+
+const handleCreate = (e: Event) => {
+  const form = new FormData(e.target as HTMLFormElement);
+  createMutation.mutate({
+    name: form.get('name') as string,
+    email: form.get('email') as string,
+    role: (form.get('role') as UserRecord['role']) || 'USER',
+    status: 'ACTIVE',
+  });
 };
 </script>
 
@@ -24,7 +53,39 @@ const handleSearch = () => {
         <h1 class="text-2xl sm:text-3xl font-bold text-surface-900 tracking-tight">Usuarios</h1>
         <p class="text-sm text-surface-500 mt-1">{{ data?.total || 0 }} usuarios registrados</p>
       </div>
-      <Button intent="primary"><Icon name="Plus" :size="16" /> Nuevo usuario</Button>
+      <Dialog v-model:open="dialogOpen">
+        <DialogTrigger as-child>
+          <Button intent="primary"><Icon name="Plus" :size="16" /> Nuevo usuario</Button>
+        </DialogTrigger>
+        <DialogContent>
+          <DialogTitle>Crear nuevo usuario</DialogTitle>
+          <DialogDescription>Completa los campos para registrar un usuario.</DialogDescription>
+          <form class="space-y-4 mt-4" @submit.prevent="handleCreate">
+            <div class="space-y-2">
+              <Label required>Nombre</Label>
+              <Input name="name" placeholder="Nombre completo" required />
+            </div>
+            <div class="space-y-2">
+              <Label required>Email</Label>
+              <Input name="email" type="email" placeholder="usuario@ejemplo.com" required />
+            </div>
+            <div class="space-y-2">
+              <Label>Rol</Label>
+              <select name="role" class="flex h-10 w-full rounded-md border border-surface-border bg-surface-background px-3 py-2 text-sm text-text-main">
+                <option value="USER">User</option>
+                <option value="ADMIN">Admin</option>
+                <option value="SUPER_ADMIN">Super Admin</option>
+              </select>
+            </div>
+            <div class="flex gap-2 pt-4 justify-end">
+              <DialogClose as-child>
+                <Button type="button" intent="secondary">Cancelar</Button>
+              </DialogClose>
+              <Button type="submit" intent="primary" :loading="createMutation.isPending.value">Crear</Button>
+            </div>
+          </form>
+        </DialogContent>
+      </Dialog>
     </div>
 
     <!-- Search -->
@@ -45,6 +106,7 @@ const handleSearch = () => {
             <th class="h-10 px-4 text-left font-medium text-text-muted">Rol</th>
             <th class="h-10 px-4 text-left font-medium text-text-muted">Estado</th>
             <th class="h-10 px-4 text-left font-medium text-text-muted">Creado</th>
+            <th class="h-10 px-4 text-left font-medium text-text-muted"></th>
           </tr>
         </thead>
         <tbody>
@@ -61,6 +123,11 @@ const handleSearch = () => {
             <td class="p-4"><Badge intent="primary" variant="subtle">{{ user.role }}</Badge></td>
             <td class="p-4"><Badge :intent="user.status === 'ACTIVE' ? 'success' : 'default'">{{ user.status === 'ACTIVE' ? 'Activo' : 'Inactivo' }}</Badge></td>
             <td class="p-4 text-text-muted">{{ user.createdAt }}</td>
+            <td class="p-4">
+              <Button intent="ghost" size="sm" @click="deleteMutation.mutate(user.id)">
+                <Icon name="Trash2" :size="14" class="text-danger-main" />
+              </Button>
+            </td>
           </tr>
         </tbody>
       </table>
