@@ -6,6 +6,9 @@ import App from './App.vue';
 import router from './router';
 import './index.css';
 
+// vue-sonner styles
+import 'vue-sonner/style.css';
+
 async function bootstrap() {
   // Start MSW
   const { worker } = await import('./mocks/browser');

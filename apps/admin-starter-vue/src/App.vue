@@ -1,8 +1,8 @@
 <script setup lang="ts">
-import { Toaster } from '@forge-ui/vue';
+import { Toaster } from 'vue-sonner';
 </script>
 
 <template>
   <router-view />
-  <Toaster position="bottom-right" />
+  <Toaster position="bottom-right" :rich-colors="true" />
 </template>
