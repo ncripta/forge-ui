@@ -3,6 +3,12 @@
   "version": "0.0.0",
   "private": true,
   "description": "Forge UI - Design System & Component Platform",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncripta/forge-ui"
+  },
+  "homepage": "https://forge-ui.dev",
+  "author": "ncripta",
   "workspaces": [
     "packages/*",
     "apps/*"

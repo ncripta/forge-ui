@@ -17,5 +17,13 @@
   "devDependencies": {
     "tsup": "^8.0.0"
   },
-  "license": "UNLICENSED"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncripta/forge-ui",
+    "directory": "packages/variants"
+  }
 }

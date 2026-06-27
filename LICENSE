@@ -1,0 +1,30 @@
+This repository uses a dual-license structure:
+
+## packages/ — MIT License
+
+All packages under the `packages/` directory are licensed under the MIT
+License. See `packages/LICENSE` for the full text.
+
+You are free to use, modify, and distribute these packages in any project
+(personal or commercial) without restriction.
+
+Packages covered:
+- @forge-ui/tokens
+- @forge-ui/css
+- @forge-ui/tailwind
+- @forge-ui/variants
+- @forge-ui/react
+- @forge-ui/vue
+
+## apps/ — Commercial License
+
+All applications under the `apps/` directory are proprietary and require
+a purchased license for commercial use. See `apps/LICENSE` for full terms.
+
+You may view and evaluate the code freely, but redistribution or commercial
+use without a valid license is prohibited.
+
+Applications covered:
+- @forge-ui/admin-starter (React)
+- @forge-ui/admin-starter-vue (Vue)
+- Future vertical packs and premium editions

@@ -51,5 +51,14 @@
     "react": ">=18.0.0",
     "react-dom": ">=18.0.0"
   },
-  "license": "UNLICENSED"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncripta/forge-ui",
+    "directory": "packages/react"
+  },
+  "keywords": ["react", "components", "ui", "design-system", "tailwind", "forge-ui"]
 }

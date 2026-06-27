@@ -16,5 +16,13 @@
   "devDependencies": {
     "tailwindcss": "^3.4.19"
   },
-  "license": "UNLICENSED"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncripta/forge-ui",
+    "directory": "packages/tailwind"
+  }
 }

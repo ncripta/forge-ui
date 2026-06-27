@@ -12,5 +12,13 @@
   "dependencies": {
     "@forge-ui/tokens": "*"
   },
-  "license": "UNLICENSED"
+  "license": "MIT",
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/ncripta/forge-ui",
+    "directory": "packages/css"
+  }
 }
