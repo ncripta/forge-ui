@@ -257,7 +257,7 @@ fs.writeFileSync(path.join(outDir, 'theme-base.css'), themeBaseCSS);
 fs.writeFileSync(path.join(outDir, 'theme-dark.css'), themeDarkCSS);
 fs.writeFileSync(path.join(outDir, 'color-themes.css'), colorThemesFile);
 
-console.log('✓ @forge-ui/css compiled successfully');
+console.log('✓ @ncripta/forge-css compiled successfully');
 console.log('  → dist/theme-base.css');
 console.log('  → dist/theme-dark.css');
 console.log('  → dist/color-themes.css');

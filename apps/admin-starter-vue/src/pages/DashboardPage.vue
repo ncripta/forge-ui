@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Card, CardHeader, CardTitle, CardContent, Badge, Avatar, Icon, LineChart } from '@forge-ui/vue';
+import { Card, CardHeader, CardTitle, CardContent, Badge, Avatar, Icon, LineChart } from '@ncripta/forge-vue';
 
 const kpis = [
   { label: 'Ingresos MRR', value: '$45,231.89', change: '+20.1%', icon: 'CreditCard', iconBg: 'bg-primary-50 text-primary-600' },

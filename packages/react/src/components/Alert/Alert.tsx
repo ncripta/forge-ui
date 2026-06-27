@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
-import { alertVariants } from '@forge-ui/variants';
+import { alertVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 export interface AlertProps

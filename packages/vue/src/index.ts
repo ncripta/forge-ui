@@ -1,7 +1,7 @@
 // Utils
 export { cn } from './utils/cn';
 
-// Shared Variants (re-exported from @forge-ui/variants)
+// Shared Variants (re-exported from @ncripta/forge-variants)
 export {
   buttonVariants,
   badgeVariants,
@@ -10,7 +10,7 @@ export {
   alertVariants,
   spinnerVariants,
   sheetContentVariants,
-} from '@forge-ui/variants';
+} from '@ncripta/forge-variants';
 
 // Atomic
 export { Button } from './components/Button';

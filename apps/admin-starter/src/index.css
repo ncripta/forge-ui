@@ -1,6 +1,6 @@
-@import '@forge-ui/css/dist/theme-base.css';
-@import '@forge-ui/css/dist/theme-dark.css';
-@import '@forge-ui/css/dist/color-themes.css';
+@import '@ncripta/forge-css/dist/theme-base.css';
+@import '@ncripta/forge-css/dist/theme-dark.css';
+@import '@ncripta/forge-css/dist/color-themes.css';
 
 @tailwind base;
 @tailwind components;

@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/react",
+  "name": "@ncripta/forge-react",
   "version": "0.3.0",
   "description": "React component library for Forge UI",
   "main": "dist/index.js",
@@ -13,8 +13,8 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "@forge-ui/tailwind": "*",
-    "@forge-ui/variants": "*",
+    "@ncripta/forge-tailwind": "*",
+    "@ncripta/forge-variants": "*",
     "@radix-ui/react-accordion": "^1.2.14",
     "@radix-ui/react-avatar": "^1.1.0",
     "@radix-ui/react-collapsible": "^1.1.14",

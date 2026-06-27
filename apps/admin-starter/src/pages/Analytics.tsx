@@ -1,4 +1,4 @@
-import { Card, CardHeader, CardTitle, CardContent, LineChart, BarChart, DonutChart } from '@forge-ui/react';
+import { Card, CardHeader, CardTitle, CardContent, LineChart, BarChart, DonutChart } from '@ncripta/forge-react';
 
 const monthlyUsers = [
   { name: 'Ene', nuevos: 45, activos: 320 },

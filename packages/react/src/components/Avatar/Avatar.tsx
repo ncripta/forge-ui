@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as AvatarPrimitive from '@radix-ui/react-avatar';
 import { type VariantProps } from 'class-variance-authority';
-import { avatarVariants } from '@forge-ui/variants';
+import { avatarVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 export interface AvatarProps

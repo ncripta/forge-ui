@@ -1,5 +1,5 @@
 import type { Config } from 'tailwindcss';
-import forgePreset from '@forge-ui/tailwind';
+import forgePreset from '@ncripta/forge-tailwind';
 
 export default {
   presets: [forgePreset as Partial<Config>],

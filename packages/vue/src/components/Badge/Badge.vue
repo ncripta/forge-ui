@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type VariantProps } from 'class-variance-authority';
-import { badgeVariants } from '@forge-ui/variants';
+import { badgeVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type BadgeVariantProps = VariantProps<typeof badgeVariants>;

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Button, Input, Label, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@forge-ui/react';
+import { Button, Input, Label, Card, CardHeader, CardTitle, CardDescription, CardContent, CardFooter } from '@ncripta/forge-react';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
 

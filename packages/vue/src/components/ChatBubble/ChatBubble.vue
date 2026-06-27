@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type VariantProps } from 'class-variance-authority';
-import { chatBubbleVariants } from '@forge-ui/variants';
+import { chatBubbleVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type ChatVariants = VariantProps<typeof chatBubbleVariants>;

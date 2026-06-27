@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
-import { inputVariants } from '@forge-ui/variants';
+import { inputVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 export interface InputProps

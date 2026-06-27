@@ -3,7 +3,7 @@ import { ref } from 'vue';
 import { useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
-import { Button, Input, Label, Card, CardHeader, CardTitle, CardContent, CardFooter } from '@forge-ui/vue';
+import { Button, Input, Label, Card, CardHeader, CardTitle, CardContent, CardFooter } from '@ncripta/forge-vue';
 
 const loading = ref(false);
 const auth = useAuthStore();

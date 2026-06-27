@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/tailwind",
+  "name": "@ncripta/forge-tailwind",
   "version": "0.3.0",
   "description": "Tailwind CSS preset powered by Forge UI design tokens",
   "main": "dist/preset.js",
@@ -11,7 +11,7 @@
     "build": "tsc"
   },
   "dependencies": {
-    "@forge-ui/css": "*"
+    "@ncripta/forge-css": "*"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.19"

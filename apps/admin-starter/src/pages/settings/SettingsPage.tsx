@@ -5,7 +5,7 @@ import {
   Button, Input, Label, Card, CardHeader, CardTitle, CardContent,
   Tabs, TabsList, TabsTrigger, TabsContent,
   Avatar, Switch, Separator, toast,
-} from '@forge-ui/react';
+} from '@ncripta/forge-react';
 
 export function SettingsPage() {
   return (

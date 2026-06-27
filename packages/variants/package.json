@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/variants",
+  "name": "@ncripta/forge-variants",
   "version": "0.3.0",
   "description": "Shared CVA variant definitions for Forge UI component libraries",
   "main": "dist/index.js",

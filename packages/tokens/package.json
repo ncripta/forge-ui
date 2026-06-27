@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/tokens",
+  "name": "@ncripta/forge-tokens",
   "version": "0.3.0",
   "description": "Design tokens - Single Source of Truth for Forge UI",
   "main": "dist/index.js",
@@ -23,5 +23,6 @@
     "type": "git",
     "url": "https://github.com/ncripta/forge-ui",
     "directory": "packages/tokens"
-  }
+  },
+  "keywords": ["design-tokens", "forge-ui", "tailwind", "css-variables"]
 }

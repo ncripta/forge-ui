@@ -4,7 +4,7 @@ import {
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
   Button,
   type IconName,
-} from '@forge-ui/react';
+} from '@ncripta/forge-react';
 
 const kpis = [
   { label: 'Ingresos MRR', value: '$45,231.89', change: '+20.1%', icon: 'CreditCard' as IconName, iconBg: 'bg-primary-50 text-primary-600' },

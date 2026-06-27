@@ -2,7 +2,7 @@
 import { computed } from 'vue';
 import { DialogPortal, DialogOverlay, DialogContent } from 'radix-vue';
 import { type VariantProps } from 'class-variance-authority';
-import { sheetContentVariants } from '@forge-ui/variants';
+import { sheetContentVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type SheetVariants = VariantProps<typeof sheetContentVariants>;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { Toaster } from '@forge-ui/vue';
+import { Toaster } from '@ncripta/forge-vue';
 </script>
 
 <template>

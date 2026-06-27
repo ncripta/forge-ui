@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { type VariantProps } from 'class-variance-authority';
-import { avatarVariants } from '@forge-ui/variants';
+import { avatarVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type AvatarVariantProps = VariantProps<typeof avatarVariants>;

@@ -10,7 +10,7 @@ import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
   toast,
   type IconName,
-} from '@forge-ui/react';
+} from '@ncripta/forge-react';
 
 const statusConfig = {
   active: { label: 'En progreso', intent: 'success' as const },

@@ -6,7 +6,7 @@ import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { useTheme } from '@/providers/useTheme';
 import { NotificationService, type NotificationRecord } from '@/services/notification.service';
-import { Icon, Button, ScrollArea, Popover, PopoverTrigger, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, cn } from '@forge-ui/vue';
+import { Icon, Button, ScrollArea, Popover, PopoverTrigger, DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator, cn } from '@ncripta/forge-vue';
 import { PopoverRoot, PopoverPortal, PopoverContent } from 'radix-vue';
 
 const ui = useUIStore();

@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/vue",
+  "name": "@ncripta/forge-vue",
   "version": "0.3.0",
   "description": "Vue 3 component library for Forge UI",
   "main": "dist/index.js",
@@ -13,8 +13,8 @@
     "dev": "tsup --watch"
   },
   "dependencies": {
-    "@forge-ui/tailwind": "*",
-    "@forge-ui/variants": "*",
+    "@ncripta/forge-tailwind": "*",
+    "@ncripta/forge-variants": "*",
     "@lucide/vue": "^1.21.0",
     "@tanstack/vue-table": "^8.21.3",
     "chart.js": "^4.5.1",

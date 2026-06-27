@@ -7,7 +7,7 @@ import {
   Button, Icon, Badge, ScrollArea,
   Popover, PopoverTrigger, PopoverContent,
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
-} from '@forge-ui/react';
+} from '@ncripta/forge-react';
 import { useNavigate } from 'react-router-dom';
 
 const COLOR_THEMES = [

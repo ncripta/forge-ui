@@ -1,7 +1,7 @@
 import * as React from 'react';
 import * as SheetPrimitive from '@radix-ui/react-dialog';
 import { type VariantProps } from 'class-variance-authority';
-import { sheetContentVariants } from '@forge-ui/variants';
+import { sheetContentVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 const Sheet = SheetPrimitive.Root;

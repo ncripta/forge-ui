@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/admin-starter-vue",
+  "name": "@ncripta/forge-admin-starter-vue",
   "version": "0.2.0",
   "private": true,
   "type": "module",
@@ -9,9 +9,9 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@forge-ui/css": "*",
-    "@forge-ui/vue": "*",
-    "@forge-ui/tailwind": "*",
+    "@ncripta/forge-css": "*",
+    "@ncripta/forge-vue": "*",
+    "@ncripta/forge-tailwind": "*",
     "@tanstack/vue-query": "^5.50.0",
     "pinia": "^2.2.0",
     "pinia-plugin-persistedstate": "^3.2.0",

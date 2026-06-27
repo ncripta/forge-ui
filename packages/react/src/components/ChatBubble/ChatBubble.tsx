@@ -1,6 +1,6 @@
 import * as React from 'react';
 import { type VariantProps } from 'class-variance-authority';
-import { chatBubbleVariants } from '@forge-ui/variants';
+import { chatBubbleVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 export interface ChatBubbleProps extends VariantProps<typeof chatBubbleVariants> {

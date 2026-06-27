@@ -3,8 +3,8 @@ import { navigationMenu, type NavItem } from '@/config/navigation';
 import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
-import { Badge, Icon, type IconName } from '@forge-ui/react';
-import { cn } from '@forge-ui/react';
+import { Badge, Icon, type IconName } from '@ncripta/forge-react';
+import { cn } from '@ncripta/forge-react';
 
 function NavItemLink({ item }: { item: NavItem }) {
   return (

@@ -1,5 +1,5 @@
 {
-  "name": "@forge-ui/css",
+  "name": "@ncripta/forge-css",
   "version": "0.3.0",
   "description": "CSS Variables generator from Forge UI tokens",
   "main": "dist/theme-base.css",
@@ -10,7 +10,7 @@
     "build": "tsx src/build.ts"
   },
   "dependencies": {
-    "@forge-ui/tokens": "*"
+    "@ncripta/forge-tokens": "*"
   },
   "license": "MIT",
   "publishConfig": {

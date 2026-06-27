@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type VariantProps } from 'class-variance-authority';
-import { inputVariants } from '@forge-ui/variants';
+import { inputVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type InputVariantProps = VariantProps<typeof inputVariants>;

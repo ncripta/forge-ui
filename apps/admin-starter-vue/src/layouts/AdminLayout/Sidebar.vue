@@ -5,7 +5,7 @@ import { navigationMenu } from '@/config/navigation';
 import { useUIStore } from '@/stores/ui.store';
 import { useAuthStore } from '@/stores/auth.store';
 import { appConfig } from '@/config/app.config';
-import { Icon, Badge, cn } from '@forge-ui/vue';
+import { Icon, Badge, cn } from '@ncripta/forge-vue';
 
 const route = useRoute();
 const ui = useUIStore();

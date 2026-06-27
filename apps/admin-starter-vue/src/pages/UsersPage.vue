@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/vue-query';
 import { UserService, type UserRecord } from '@/services/user.service';
-import { Button, Input, Label, Badge, Avatar, Icon, Spinner, Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose, toast } from '@forge-ui/vue';
+import { Button, Input, Label, Badge, Avatar, Icon, Spinner, Dialog, DialogContent, DialogTrigger, DialogTitle, DialogDescription, DialogClose, toast } from '@ncripta/forge-vue';
 
 const queryClient = useQueryClient();
 const search = ref('');

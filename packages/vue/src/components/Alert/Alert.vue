@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed } from 'vue';
 import { type VariantProps } from 'class-variance-authority';
-import { alertVariants } from '@forge-ui/variants';
+import { alertVariants } from '@ncripta/forge-variants';
 import { cn } from '../../utils/cn';
 
 type AlertVariantProps = VariantProps<typeof alertVariants>;

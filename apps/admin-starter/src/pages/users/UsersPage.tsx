@@ -8,7 +8,7 @@ import {
   DropdownMenu, DropdownMenuTrigger, DropdownMenuContent, DropdownMenuItem, DropdownMenuSeparator,
   Select, SelectTrigger, SelectValue, SelectContent, SelectItem,
   Label, toast,
-} from '@forge-ui/react';
+} from '@ncripta/forge-react';
 
 const columns: ColumnDef<UserRecord, unknown>[] = [
   {
