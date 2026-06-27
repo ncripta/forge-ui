@@ -1,5 +1,14 @@
 # @forge-ui/react
 
+## 0.4.1
+
+### Patch Changes
+
+- docs: add bilingual README (English + Spanish) to all packages and apps
+- Updated dependencies
+  - @ncripta/forge-tailwind@0.4.1
+  - @ncripta/forge-variants@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes

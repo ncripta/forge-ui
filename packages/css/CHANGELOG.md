@@ -1,5 +1,13 @@
 # @forge-ui/css
 
+## 0.4.1
+
+### Patch Changes
+
+- docs: add bilingual README (English + Spanish) to all packages and apps
+- Updated dependencies
+  - @ncripta/forge-tokens@0.4.1
+
 ## 0.4.0
 
 ### Minor Changes

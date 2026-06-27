@@ -1,6 +1,6 @@
 {
   "name": "@ncripta/forge-tailwind",
-  "version": "0.4.0",
+  "version": "0.4.1",
   "description": "Tailwind CSS preset powered by Forge UI design tokens",
   "main": "dist/preset.js",
   "types": "dist/preset.d.ts",
