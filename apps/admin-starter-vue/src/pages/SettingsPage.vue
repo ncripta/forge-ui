@@ -2,8 +2,7 @@
 import { ref } from 'vue';
 import { useAuthStore } from '@/stores/auth.store';
 import { useTheme } from '@/providers/useTheme';
-import { Button, Input, Label, Card, CardHeader, CardTitle, CardContent, Tabs, TabsList, TabsTrigger, TabsContent, Switch, Separator, Avatar } from '@forge-ui/vue';
-import { toast } from 'vue-sonner';
+import { Button, Input, Label, Card, CardHeader, CardTitle, CardContent, Tabs, TabsList, TabsTrigger, TabsContent, Switch, Separator, Avatar, toast } from '@forge-ui/vue';
 
 const auth = useAuthStore();
 const { theme, setTheme } = useTheme();
