@@ -1,5 +1,16 @@
 # @forge-ui/css
 
+## 0.5.0
+
+### Minor Changes
+
+- Sanitize spacing token CSS variable names to valid custom properties and fix minifier warnings
+
+### Patch Changes
+
+- Updated dependencies
+  - @ncripta/forge-tokens@0.5.0
+
 ## 0.4.1
 
 ### Patch Changes

@@ -1,6 +1,6 @@
 {
   "name": "@ncripta/forge-vue",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Vue 3 component library for Forge UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

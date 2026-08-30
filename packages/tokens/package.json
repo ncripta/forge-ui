@@ -1,6 +1,6 @@
 {
   "name": "@ncripta/forge-tokens",
-  "version": "0.4.1",
+  "version": "0.5.0",
   "description": "Design tokens - Single Source of Truth for Forge UI",
   "main": "dist/index.js",
   "types": "dist/index.d.ts",

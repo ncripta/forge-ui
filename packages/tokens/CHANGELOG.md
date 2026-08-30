@@ -1,5 +1,11 @@
 # @forge-ui/tokens
 
+## 0.5.0
+
+### Minor Changes
+
+- Sanitize spacing token CSS variable names to valid custom properties and fix minifier warnings
+
 ## 0.4.1
 
 ### Patch Changes
