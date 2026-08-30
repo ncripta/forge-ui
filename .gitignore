@@ -27,6 +27,10 @@ build/
 **/dist/
 **/build/
 
+# Caché incremental de TypeScript (tsc -b / composite)
+*.tsbuildinfo
+**/*.tsbuildinfo
+
 # Archivos temporales de Changesets
 .changeset/*.md
 !.changeset/README.md
