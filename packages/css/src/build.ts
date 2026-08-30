@@ -95,9 +95,18 @@ const motionFlat = flattenTokens(motion.motion);
 
 // --- Generación de CSS vars ---
 
+/**
+ * Sanitiza claves de tokens para que sean nombres válidos de CSS custom properties.
+ * Los puntos (ej. "0.5") no son válidos en nombres de variables CSS y generan
+ * warnings en minificadores modernos (esbuild). Se reemplazan por "_".
+ */
+function sanitizeKey(key: string): string {
+  return key.replace(/\./g, '_');
+}
+
 function generateVars(tokens: Record<string, string>, prefix: string): string {
   return Object.entries(tokens)
-    .map(([key, value]) => `  --forge-${prefix}${key}: ${value};`)
+    .map(([key, value]) => `  --forge-${prefix}${sanitizeKey(key)}: ${value};`)
     .join('\n');
 }
 
