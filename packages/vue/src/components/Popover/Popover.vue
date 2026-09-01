@@ -8,7 +8,9 @@ const props = withDefaults(defineProps<Props>(), { align: 'center', sideOffset: 
 
 <template>
   <PopoverRoot>
-    <slot name="trigger" />
+    <PopoverTrigger as-child>
+      <slot name="trigger" />
+    </PopoverTrigger>
     <PopoverPortal>
       <PopoverContent
         :align="align"
