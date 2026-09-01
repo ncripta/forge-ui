@@ -1,5 +1,11 @@
 # @forge-ui/vue
 
+## 0.5.1
+
+### Patch Changes
+
+- Fix Popover not opening: the #trigger slot is now wrapped in PopoverTrigger so clicking it opens the popover.
+
 ## 0.5.0
 
 ### Minor Changes
